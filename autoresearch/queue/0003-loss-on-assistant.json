@@ -1,0 +1,8 @@
+{
+  "slug": "loss-on-assistant",
+  "hypothesis": "First method change: supervise only the agent's own tokens (mask system/user/tool-output). Smoke showed ~70% of tokens are observations -- noise to memorise; concentrating capacity on the ~30% decision tokens should lower decision loss.",
+  "base": "best",
+  "overrides": {
+    "loss_on": "assistant"
+  }
+}

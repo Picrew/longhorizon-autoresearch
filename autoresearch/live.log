@@ -1,0 +1,5 @@
+[2026-06-09 20:34:08] LOOP START max_experiments=40 data_root=/home/ljj/ssd1/ljj/research/llm-longhorizon-traces model=/home/ljj/ssd1/ljj/research/llm-longhorizon-traces/models/Qwen3-4B-Instruct-2507
+[2026-06-09 20:34:08] EXP 0001 START  slug=baseline  base=baseline  hyp=naive QLoRA: r16 attn-only, lr1e-4, no warmup, no packing
+[2026-06-09 20:34:08] EXP 0001 overrides={}
+[2026-06-09 20:59:15] EXP 0001 KEPT  val_loss=0.93794  steps=64  train_s=1215.5
+[2026-06-09 20:59:15] QUEUE EMPTY (1 done). Waiting for new specs...

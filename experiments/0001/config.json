@@ -1,10 +1,3 @@
-# Current best method
-
-- best experiment: **0001**
-- held-out val loss (lower=better): **0.93794**
-
-## Config
-```json
 {
   "train_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/train.sft.jsonl",
   "val_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/val.sft.jsonl",
@@ -35,8 +28,3 @@
   "max_steps_cap": 100000,
   "seed": 42
 }
-```
-
-## Accepted improvements (in order)
-
-- `0001` baseline: naive QLoRA: r16 attn-only, lr1e-4, no warmup, no packing -> loss 0.93794

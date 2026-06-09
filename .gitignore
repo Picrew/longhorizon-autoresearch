@@ -9,3 +9,4 @@ experiments/*/adapter/
 experiments/*/stdout.log
 experiments/*/stderr.log
 *.tmp
+loop_state.json

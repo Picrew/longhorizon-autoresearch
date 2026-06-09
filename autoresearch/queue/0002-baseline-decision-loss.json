@@ -1,0 +1,7 @@
+{
+  "slug": "baseline-decision-loss",
+  "hypothesis": "Re-anchor the curve on the decision-token metric: same recipe as 0001 (r16 attn-only, lr1e-4, loss_on=all) but scored on decision loss. This is the true top-of-curve.",
+  "base": "baseline",
+  "overrides": {},
+  "reanchor": true
+}

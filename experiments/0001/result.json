@@ -1,0 +1,71 @@
+{
+  "exp_id": "0001",
+  "config_path": "/home/ljj/ssd1/ljj/research/llm-longhorizon-traces/autoresearch_repo/experiments/0001/config.json",
+  "config": {
+    "train_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/train.sft.jsonl",
+    "val_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/val.sft.jsonl",
+    "max_length": 8192,
+    "packing": false,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "lr": 0.0001,
+    "lr_scheduler_type": "constant_with_warmup",
+    "warmup_steps": 0,
+    "warmup_ratio": 0.0,
+    "planned_steps": null,
+    "weight_decay": 0.0,
+    "optim": "paged_adamw_8bit",
+    "batch_size": 1,
+    "grad_accum": 8,
+    "max_grad_norm": 1.0,
+    "neftune_noise_alpha": null,
+    "attn_implementation": "sdpa",
+    "train_seconds": 1200,
+    "max_steps_cap": 100000,
+    "seed": 42
+  },
+  "primary_metric": 0.93794,
+  "val_overall": {
+    "rows": 303,
+    "tokens": 1784638,
+    "loss": 0.93794,
+    "ppl": 2.555,
+    "token_acc": 0.7648
+  },
+  "val_by_bucket": {
+    "long_horizon": {
+      "rows": 110,
+      "tokens": 886150,
+      "loss": 0.93852,
+      "ppl": 2.556,
+      "token_acc": 0.7663
+    },
+    "medium_agentic": {
+      "rows": 156,
+      "tokens": 806529,
+      "loss": 0.91669,
+      "ppl": 2.501,
+      "token_acc": 0.76748
+    },
+    "short_format": {
+      "rows": 37,
+      "tokens": 91959,
+      "loss": 1.1188,
+      "ppl": 3.061,
+      "token_acc": 0.72682
+    }
+  },
+  "train_loss": 1.0733832474797964,
+  "steps": 64,
+  "tokens_seen_approx": 4194304,
+  "train_seconds": 1215.5,
+  "eval_seconds": 284.5,
+  "timestamp": "2026-06-09T20:59:14"
+}
