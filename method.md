@@ -1,7 +1,7 @@
 # Current best method
 
-- best experiment: **0013**
-- held-out val loss (lower=better): **0.68925**
+- best experiment: **0017**
+- held-out val loss (lower=better): **0.6886**
 
 ## Config
 ```json
@@ -11,8 +11,8 @@
   "loss_on": "assistant",
   "truncation": "right",
   "max_length": 5120,
-  "lora_r": 32,
-  "lora_alpha": 64,
+  "lora_r": 64,
+  "lora_alpha": 128,
   "lora_dropout": 0.05,
   "target_modules": [
     "q_proj",
@@ -50,3 +50,4 @@
 - `0011` lr-4e-4: Keep climbing LR ridge: 3e-4 -> 4e-4 until it regresses. -> loss 0.70361
 - `0012` ctx-5120: More throughput: train ctx ->5120 for more steps. Watch long bucket for the coverage floor. -> loss 0.69836
 - `0013` lora-r32-attn: Memory-safe capacity test (0007 OOM'd with MLP): LoRA r16->r32 alpha64, attn-only. -> loss 0.68925
+- `0017` lora-r64: Capacity still helping (r32 gave -0.009); push rank r32->r64, alpha->128. -> loss 0.6886

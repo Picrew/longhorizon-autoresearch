@@ -1,0 +1,82 @@
+{
+  "exp_id": "0016",
+  "config": {
+    "train_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/train.sft.jsonl",
+    "val_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/val.sft.jsonl",
+    "loss_on": "assistant",
+    "truncation": "right",
+    "max_length": 5120,
+    "pos_weight_end": null,
+    "oversample": null,
+    "lora_r": 32,
+    "lora_alpha": 64,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "lr": 0.0004,
+    "lr_scheduler_type": "constant_with_warmup",
+    "warmup_steps": 5,
+    "warmup_ratio": 0.0,
+    "planned_steps": null,
+    "weight_decay": 0.0,
+    "optim": "paged_adamw_8bit",
+    "batch_size": 1,
+    "grad_accum": 8,
+    "max_grad_norm": 1.0,
+    "neftune_noise_alpha": null,
+    "attn_implementation": "sdpa",
+    "train_seconds": 1200,
+    "max_steps_cap": 100000,
+    "seed": 42,
+    "eval_limit": 0
+  },
+  "metric_kind": "decision_loss",
+  "primary_metric": 0.69172,
+  "val_overall": {
+    "rows": 303,
+    "dec_tokens": 649504,
+    "full_tokens": 1784638,
+    "decision_loss": 0.69172,
+    "decision_ppl": 1.997,
+    "decision_acc": 0.79189,
+    "full_loss": 1.56947
+  },
+  "val_by_bucket": {
+    "long_horizon": {
+      "rows": 110,
+      "dec_tokens": 306744,
+      "full_tokens": 886150,
+      "decision_loss": 0.70956,
+      "decision_ppl": 2.033,
+      "decision_acc": 0.78323,
+      "full_loss": 1.71668
+    },
+    "medium_agentic": {
+      "rows": 156,
+      "dec_tokens": 303265,
+      "full_tokens": 806529,
+      "decision_loss": 0.66057,
+      "decision_ppl": 1.936,
+      "decision_acc": 0.80297,
+      "full_loss": 1.4187
+    },
+    "short_format": {
+      "rows": 37,
+      "dec_tokens": 39495,
+      "full_tokens": 91959,
+      "decision_loss": 0.79238,
+      "decision_ppl": 2.209,
+      "decision_acc": 0.7741,
+      "full_loss": 1.47324
+    }
+  },
+  "train_loss": 0.7768770045704312,
+  "steps": 90,
+  "train_seconds": 1206.1,
+  "eval_seconds": 283.7,
+  "timestamp": "2026-06-10T04:21:54"
+}

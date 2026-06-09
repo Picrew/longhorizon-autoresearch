@@ -46,3 +46,18 @@
 [2026-06-10 02:41:38] EXP 0012 KEPT  val_loss=0.69836 (was 0.70361, -0.00525)  steps=90  train_s=1206.9
 [2026-06-10 02:41:38] EXP 0013 START  slug=lora-r32-attn  base=best  hyp=Memory-safe capacity test (0007 OOM'd with MLP): LoRA r16->r32 alpha64, attn-only.
 [2026-06-10 02:41:38] EXP 0013 overrides={"lora_r": 32, "lora_alpha": 64}
+[2026-06-10 03:06:43] EXP 0013 KEPT  val_loss=0.68925 (was 0.69836, -0.00911)  steps=90  train_s=1205.5
+[2026-06-10 03:06:43] EXP 0014 START  slug=lr-5e-4  base=best  hyp=Keep climbing LR ridge: 4e-4 -> 5e-4.
+[2026-06-10 03:06:43] EXP 0014 overrides={"lr": 0.0005}
+[2026-06-10 03:31:48] EXP 0014 DISCARD  val_loss=0.68933  running_best=0.68925  steps=90  train_s=1205.9
+[2026-06-10 03:31:49] EXP 0015 START  slug=ctx-4096  base=best  hyp=Coverage-floor probe: train ctx ->4096 for more steps. Eval stays @8192. Watch long bucket -- if it regresses, lock the floor.
+[2026-06-10 03:31:49] EXP 0015 overrides={"max_length": 4096}
+[2026-06-10 03:56:49] EXP 0015 DISCARD  val_loss=0.68985  running_best=0.68925  steps=110  train_s=1201.4
+[2026-06-10 03:56:49] EXP 0016 START  slug=warmup-5  base=best  hyp=Brief warmup (5 steps) to stabilize the now-high LR from step 1.
+[2026-06-10 03:56:49] EXP 0016 overrides={"warmup_steps": 5}
+[2026-06-10 04:21:54] EXP 0016 DISCARD  val_loss=0.69172  running_best=0.68925  steps=90  train_s=1206.1
+[2026-06-10 04:21:55] EXP 0017 START  slug=lora-r64  base=best  hyp=Capacity still helping (r32 gave -0.009); push rank r32->r64, alpha->128.
+[2026-06-10 04:21:55] EXP 0017 overrides={"lora_r": 64, "lora_alpha": 128}
+[2026-06-10 04:47:02] EXP 0017 KEPT  val_loss=0.6886 (was 0.68925, -0.00065)  steps=90  train_s=1207.8
+[2026-06-10 04:47:02] EXP 0018 START  slug=neftune-5  base=best  hyp=Method lever: NEFTune embedding-noise regularisation (alpha 5) on the best recipe.
+[2026-06-10 04:47:02] EXP 0018 overrides={"neftune_noise_alpha": 5.0}

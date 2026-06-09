@@ -48,7 +48,12 @@ from transformers import (
 
 
 # The eval metric is FIXED. Do not make these per-experiment knobs.
-EVAL_MAX_LENGTH = 8192
+# v2 (2026-06-10): score long traces well BEYOND 8192 so the metric is genuinely
+# long-horizon. Cross-entropy is computed in position chunks to avoid the
+# [seq_len, vocab] float32 blow-up that would OOM at these lengths.
+EVAL_VERSION = "decision_loss_v2"
+EVAL_MAX_LENGTH = 16384          # score up to this many tokens per trace
+EVAL_CHUNK = 2048                # position-chunk for the CE computation
 ROLE_RE = re.compile(r"<\|(system|user|assistant|tool)\|>")
 DECISION_ROLES = {"assistant"}  # tokens the agent itself produces
 
@@ -237,25 +242,29 @@ def score_heldout(model, tokenizer, val_file: Path, eval_limit: int = 0) -> dict
             continue
         input_ids = torch.tensor([ids], device=device)
         out = model(input_ids=input_ids)
-        logits = out.logits[:, :-1, :]
-        targets = input_ids[:, 1:]
-        nll = F.cross_entropy(logits.reshape(-1, logits.size(-1)), targets.reshape(-1), reduction="none")
-        pred = logits.argmax(dim=-1).reshape(-1)
-        tgt = targets.reshape(-1)
-        correct = (pred == tgt)
-        # decision mask aligns with the predicted token i+1 -> role of token i+1
-        dec_mask = torch.tensor([r in DECISION_ROLES for r in roles[1:]], device=device)
-
+        logits_all = out.logits[0]                  # [L, V] bf16
+        L = input_ids.shape[1]
         a = by_bucket.setdefault(bucket, acc())
+        # predict token i+1 from position i (i in 0..L-2); chunk the CE so the
+        # float32 [chunk, V] tensor stays small even when L is 16k.
+        for start in range(0, L - 1, EVAL_CHUNK):
+            end = min(start + EVAL_CHUNK, L - 1)
+            lg = logits_all[start:end].float()                       # [c, V]
+            tg = input_ids[0, start + 1:end + 1]                     # [c]
+            ce = F.cross_entropy(lg, tg, reduction="none")           # [c]
+            correct = (lg.argmax(dim=-1) == tg)
+            decm = torch.tensor([r in DECISION_ROLES for r in roles[start + 1:end + 1]], device=device)
+            for acc_ in (overall, a):
+                acc_["full_nll"] += float(ce.sum().item())
+                acc_["full_n"] += ce.numel()
+                acc_["full_correct"] += int(correct.sum().item())
+                acc_["dec_nll"] += float(ce[decm].sum().item())
+                acc_["dec_n"] += int(decm.sum().item())
+                acc_["dec_correct"] += int(correct[decm].sum().item())
+            del lg, ce, correct, decm
         for acc_ in (overall, a):
             acc_["rows"] += 1
-            acc_["full_nll"] += float(nll.sum().item())
-            acc_["full_n"] += nll.numel()
-            acc_["full_correct"] += int(correct.sum().item())
-            acc_["dec_nll"] += float(nll[dec_mask].sum().item())
-            acc_["dec_n"] += int(dec_mask.sum().item())
-            acc_["dec_correct"] += int(correct[dec_mask].sum().item())
-        del out, logits, nll, input_ids
+        del out, logits_all, input_ids
 
     def agg(b):
         out = {"rows": b["rows"], "dec_tokens": b["dec_n"], "full_tokens": b["full_n"]}
@@ -396,7 +405,7 @@ def main() -> None:
     result = {
         "exp_id": args.exp_id,
         "config": cfg,
-        "metric_kind": "decision_loss",
+        "metric_kind": EVAL_VERSION,
         "primary_metric": ev["overall"]["decision_loss"],   # lower is better
         "val_overall": ev["overall"],
         "val_by_bucket": ev["by_bucket"],

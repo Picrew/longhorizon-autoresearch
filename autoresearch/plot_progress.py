@@ -24,11 +24,17 @@ def main() -> None:
         line = line.strip()
         if line:
             recs.append(json.loads(line))
-    # Only plot the decision-loss curve (the current primary metric). Pre-upgrade
-    # full-sequence-baseline rows are kept in the ledger but excluded from the plot.
-    recs = [r for r in recs if r.get("metric") is not None and r.get("metric_kind") == "decision_loss"]
+    # Plot the curve for the CURRENT metric version only (the latest metric_kind
+    # present). Earlier-metric rows stay in the ledger but off this curve, so each
+    # reanchor (metric change) gets its own clean descending curve.
+    kinds = [r.get("metric_kind") for r in recs if r.get("metric") is not None and r.get("metric_kind")]
+    if not kinds:
+        print("no scored experiments yet")
+        return
+    current_kind = kinds[-1]
+    recs = [r for r in recs if r.get("metric") is not None and r.get("metric_kind") == current_kind]
     if not recs:
-        print("no scored decision_loss experiments yet")
+        print("no scored experiments for current metric yet")
         return
 
     import matplotlib
@@ -65,7 +71,7 @@ def main() -> None:
             ax.annotate(label, (x, r["metric"]), textcoords="offset points",
                         xytext=(4, 6), rotation=30, fontsize=7, color="#15803d")
 
-    ax.set_xlabel("Experiment #")
+    ax.set_xlabel("Experiment # (current metric version)")
     ax.set_ylabel("Held-out decision-token loss (lower is better)")
     ax.grid(True, alpha=0.3)
     ax.legend(loc="upper right")

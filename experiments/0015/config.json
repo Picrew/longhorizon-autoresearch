@@ -1,0 +1,32 @@
+{
+  "train_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/train.sft.jsonl",
+  "val_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/val.sft.jsonl",
+  "loss_on": "assistant",
+  "truncation": "right",
+  "max_length": 4096,
+  "lora_r": 32,
+  "lora_alpha": 64,
+  "lora_dropout": 0.05,
+  "target_modules": [
+    "q_proj",
+    "k_proj",
+    "v_proj",
+    "o_proj"
+  ],
+  "lr": 0.0004,
+  "lr_scheduler_type": "constant_with_warmup",
+  "warmup_steps": 0,
+  "warmup_ratio": 0.0,
+  "planned_steps": null,
+  "weight_decay": 0.0,
+  "optim": "paged_adamw_8bit",
+  "batch_size": 1,
+  "grad_accum": 8,
+  "max_grad_norm": 1.0,
+  "neftune_noise_alpha": null,
+  "attn_implementation": "sdpa",
+  "train_seconds": 1200,
+  "max_steps_cap": 100000,
+  "seed": 42,
+  "eval_limit": 0
+}

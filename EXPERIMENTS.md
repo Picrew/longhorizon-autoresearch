@@ -25,5 +25,10 @@ decision-loss curve).
 | 0010 | cosine-cooldown-64 | Proper LR schedule on the lr2e-4 best: cosine decay over planned 64 steps with 3-step w... | 0.75848 | decision_loss |  | 64 | 994.9 |
 | 0011 | lr-4e-4 | Keep climbing LR ridge: 3e-4 -> 4e-4 until it regresses. | 0.70361 | decision_loss | ✅ | 78 | 1206.0 |
 | 0012 | ctx-5120 | More throughput: train ctx ->5120 for more steps. Watch long bucket for the coverage fl... | 0.69836 | decision_loss | ✅ | 90 | 1206.9 |
+| 0013 | lora-r32-attn | Memory-safe capacity test (0007 OOM'd with MLP): LoRA r16->r32 alpha64, attn-only. | 0.68925 | decision_loss | ✅ | 90 | 1205.5 |
+| 0014 | lr-5e-4 | Keep climbing LR ridge: 4e-4 -> 5e-4. | 0.68933 | decision_loss |  | 90 | 1205.9 |
+| 0015 | ctx-4096 | Coverage-floor probe: train ctx ->4096 for more steps. Eval stays @8192. Watch long buc... | 0.68985 | decision_loss |  | 110 | 1201.4 |
+| 0016 | warmup-5 | Brief warmup (5 steps) to stabilize the now-high LR from step 1. | 0.69172 | decision_loss |  | 90 | 1206.1 |
+| 0017 | lora-r64 | Capacity still helping (r32 gave -0.009); push rank r32->r64, alpha->128. | 0.68860 | decision_loss | ✅ | 90 | 1207.8 |
 
-_12 experiments logged; 10 on the decision-loss curve, 7 kept improvements._
+_17 experiments logged; 15 on the decision-loss curve, 9 kept improvements._
