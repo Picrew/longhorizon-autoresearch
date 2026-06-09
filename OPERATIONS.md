@@ -33,15 +33,30 @@ rsync -az -e 'ssh -p 6000' --exclude '._*' ljj@124.220.35.225:$SRV/progress.png 
 # branch exp/NNNN-slug, update main (EXPERIMENTS.md + ledger + method.md + progress.png), push.
 ```
 
-## Add new experiments (steering)
-Drop higher-numbered specs into the queue dir, then sync to the box:
+## Decision protocol (this is the research — do it every check-in)
+The loop is **adaptive**: never pre-bake a long queue. At each check-in:
+1. Read the evidence: `experiments/ledger.jsonl`, the per-bucket `val_by_bucket`
+   in each `result.json`, `method.md` (current best), and `RESEARCH_LOG.md`.
+2. Form ONE hypothesis from what the evidence says — **prefer a method change**
+   from `METHODS.md` over a hyperparameter tweak. E.g. "decision-masking helped
+   most on the long bucket → try late-token weighting next" or "long-bucket loss
+   barely moved while medium improved → the long traces are being truncated; try
+   `head_tail`." If a needed lever isn't implemented yet, **implement it in
+   run_experiment.py now**, smoke-test it (tiny `train_seconds`+`eval_limit`),
+   sync, then queue it.
+3. Write the reasoning into `RESEARCH_LOG.md` (the *why*, not just the result).
+4. Queue at most 1–2 specs ahead (so the GPU doesn't idle, but the search stays
+   adaptive). One change per experiment for clean attribution.
+
+## Add experiments to the queue
 ```bash
-# write $RB/autoresearch/queue/00NN-slug.json  {slug,hypothesis,base,overrides}
+# write $RB/autoresearch/queue/00NN-slug.json  {slug,hypothesis,base,overrides[,reanchor]}
 rsync -az -e 'ssh -p 6000' --exclude '._*' $RB/autoresearch/queue/ \
   ljj@124.220.35.225:$SRV/autoresearch/queue/
 ```
 The loop reads the queue dir fresh every iteration and skips exp_ids already in
-the ledger — no restart needed, no race.
+the ledger — no restart needed, no race. A spec with `"reanchor": true` resets the
+running best (used once to start the decision-loss curve cleanly).
 
 ## Restart the loop if it died
 ```bash

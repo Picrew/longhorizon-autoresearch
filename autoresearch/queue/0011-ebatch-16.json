@@ -1,8 +1,0 @@
-{
-  "slug": "ebatch-16",
-  "hypothesis": "effective batch 8->16 (grad_accum 16)",
-  "base": "best",
-  "overrides": {
-    "grad_accum": 16
-  }
-}

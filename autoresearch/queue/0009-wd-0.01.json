@@ -1,8 +1,0 @@
-{
-  "slug": "wd-0.01",
-  "hypothesis": "weight decay 0.0->0.01",
-  "base": "best",
-  "overrides": {
-    "weight_decay": 0.01
-  }
-}

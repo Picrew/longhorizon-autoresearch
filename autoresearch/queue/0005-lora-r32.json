@@ -1,9 +1,0 @@
-{
-  "slug": "lora-r32",
-  "hypothesis": "LoRA r16->r32, alpha32->64",
-  "base": "best",
-  "overrides": {
-    "lora_r": 32,
-    "lora_alpha": 64
-  }
-}

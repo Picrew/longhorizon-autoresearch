@@ -24,9 +24,11 @@ def main() -> None:
         line = line.strip()
         if line:
             recs.append(json.loads(line))
-    recs = [r for r in recs if r.get("metric") is not None]
+    # Only plot the decision-loss curve (the current primary metric). Pre-upgrade
+    # full-sequence-baseline rows are kept in the ledger but excluded from the plot.
+    recs = [r for r in recs if r.get("metric") is not None and r.get("metric_kind") == "decision_loss"]
     if not recs:
-        print("no scored experiments yet")
+        print("no scored decision_loss experiments yet")
         return
 
     import matplotlib
@@ -64,7 +66,7 @@ def main() -> None:
                         xytext=(4, 6), rotation=30, fontsize=7, color="#15803d")
 
     ax.set_xlabel("Experiment #")
-    ax.set_ylabel("Validation loss (lower is better)")
+    ax.set_ylabel("Held-out decision-token loss (lower is better)")
     ax.grid(True, alpha=0.3)
     ax.legend(loc="upper right")
     fig.tight_layout()

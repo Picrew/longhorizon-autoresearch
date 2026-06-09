@@ -1,8 +1,0 @@
-{
-  "slug": "dropout-0",
-  "hypothesis": "LoRA dropout 0.05->0.0",
-  "base": "best",
-  "overrides": {
-    "lora_dropout": 0.0
-  }
-}

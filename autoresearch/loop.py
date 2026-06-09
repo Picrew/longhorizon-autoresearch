@@ -114,6 +114,13 @@ def run_one(spec_path: Path, exp_id: str, state: dict, args) -> None:
     cfg = dict(base_cfg)
     cfg.update(overrides)
 
+    # A reanchor spec resets the running best so this experiment becomes the new
+    # anchor of the curve (used e.g. when the primary metric definition changes).
+    if spec.get("reanchor"):
+        log_live(f"EXP {exp_id} REANCHOR: resetting running best before this run")
+        state["best_metric"] = None
+        state["best_config"] = None
+
     exp_dir = REPO / "experiments" / exp_id
     exp_dir.mkdir(parents=True, exist_ok=True)
     cfg_path = exp_dir / "config.json"
@@ -124,6 +131,7 @@ def run_one(spec_path: Path, exp_id: str, state: dict, args) -> None:
     log_live(f"EXP {exp_id} overrides={json.dumps(overrides, ensure_ascii=False)}")
 
     metric = None
+    metric_kind = None
     steps = None
     train_seconds = None
     by_bucket = None
@@ -147,6 +155,7 @@ def run_one(spec_path: Path, exp_id: str, state: dict, args) -> None:
             log_live(f"EXP {exp_id} FAILED rc={proc.returncode}; tail: {proc.stderr.strip()[-400:]}")
         else:
             metric = result["primary_metric"]
+            metric_kind = result.get("metric_kind")
             steps = result["steps"]
             train_seconds = result["train_seconds"]
             by_bucket = result.get("val_by_bucket")
@@ -185,6 +194,7 @@ def run_one(spec_path: Path, exp_id: str, state: dict, args) -> None:
         "overrides": overrides,
         "status": status,
         "metric": metric,
+        "metric_kind": metric_kind,
         "kept": kept,
         "best_so_far": state.get("best_metric"),
         "steps": steps,

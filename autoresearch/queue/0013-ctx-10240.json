@@ -1,8 +1,0 @@
-{
-  "slug": "ctx-10240",
-  "hypothesis": "max_length 8192->10240 (more long-horizon coverage)",
-  "base": "best",
-  "overrides": {
-    "max_length": 10240
-  }
-}

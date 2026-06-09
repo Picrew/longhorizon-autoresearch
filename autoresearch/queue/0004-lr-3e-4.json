@@ -1,8 +1,0 @@
-{
-  "slug": "lr-3e-4",
-  "hypothesis": "lr -> 3e-4",
-  "base": "best",
-  "overrides": {
-    "lr": 0.0003
-  }
-}

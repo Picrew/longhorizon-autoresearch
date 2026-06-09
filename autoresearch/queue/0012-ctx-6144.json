@@ -1,8 +1,0 @@
-{
-  "slug": "ctx-6144",
-  "hypothesis": "max_length 8192->6144 (more steps per budget)",
-  "base": "best",
-  "overrides": {
-    "max_length": 6144
-  }
-}
