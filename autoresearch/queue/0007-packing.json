@@ -1,0 +1,8 @@
+{
+  "slug": "packing",
+  "hypothesis": "sequence packing on (more steps per budget)",
+  "base": "best",
+  "overrides": {
+    "packing": true
+  }
+}

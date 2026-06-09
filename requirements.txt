@@ -1,0 +1,10 @@
+# Verified working stack on RTX 4090 (CUDA 12.8, driver 570), Python 3.11
+# Install into a venv on the GPU box. torch must match the CUDA build.
+torch==2.8.0
+transformers==4.57.3
+trl==0.24.0
+peft==0.19.1
+bitsandbytes==0.49.2
+accelerate==1.13.0
+datasets>=3.0.0
+matplotlib>=3.7

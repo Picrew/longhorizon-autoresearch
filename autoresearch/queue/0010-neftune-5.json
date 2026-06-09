@@ -1,0 +1,8 @@
+{
+  "slug": "neftune-5",
+  "hypothesis": "NEFTune noise alpha=5",
+  "base": "best",
+  "overrides": {
+    "neftune_noise_alpha": 5.0
+  }
+}

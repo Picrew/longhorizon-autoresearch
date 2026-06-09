@@ -1,0 +1,11 @@
+._*
+.DS_Store
+__pycache__/
+*.pyc
+autoresearch/loop.out
+# experiment artifacts that are large / regenerated
+experiments/*/trainer/
+experiments/*/adapter/
+experiments/*/stdout.log
+experiments/*/stderr.log
+*.tmp

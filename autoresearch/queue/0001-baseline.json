@@ -1,0 +1,6 @@
+{
+  "slug": "baseline",
+  "hypothesis": "naive QLoRA: r16 attn-only, lr1e-4, no warmup, no packing",
+  "base": "baseline",
+  "overrides": {}
+}

@@ -1,0 +1,8 @@
+{
+  "slug": "warmup-5",
+  "hypothesis": "add 5-step warmup",
+  "base": "best",
+  "overrides": {
+    "warmup_steps": 5
+  }
+}
