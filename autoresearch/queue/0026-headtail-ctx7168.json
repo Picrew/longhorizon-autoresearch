@@ -1,0 +1,8 @@
+{
+  "slug": "headtail-ctx7168",
+  "hypothesis": "head_tail at ctx 7168 -- more coverage still. Brackets head_tail's optimal training context for long-horizon.",
+  "base": "best",
+  "overrides": {
+    "max_length": 7168
+  }
+}

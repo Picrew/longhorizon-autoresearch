@@ -18,6 +18,17 @@ resume by reading files, never from memory.
 ssh -p 6000 ljj@124.220.35.225 'cd /home/ljj/ssd1/ljj/research/llm-longhorizon-traces/autoresearch_repo && tail -n 20 autoresearch/live.log; echo ---; ls experiments; echo ---; pgrep -af "autoresearch/loop.py" || echo "LOOP NOT RUNNING"; nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv,noheader'
 ```
 
+## ⚠ rsync pulls are flaky while the box is training
+Under GPU+CPU load, `rsync` pulls intermittently fail with "receiver has empty
+file list: exiting" (the push direction is usually fine). ssh commands stay
+reliable, so pull **text** files via `ssh cat >` and **binaries** via `scp`:
+```bash
+ssh -p 6000 ljj@124.220.35.225 "cat $SRV/experiments/ledger.jsonl" > experiments/ledger.jsonl
+ssh -p 6000 ljj@124.220.35.225 "cat $SRV/method.md" > method.md
+scp -P 6000 ljj@124.220.35.225:$SRV/progress.png ./progress.png
+```
+ALWAYS verify `wc -l experiments/ledger.jsonl` matches the server before committing.
+
 ## Pull results back & publish (each wake-up)
 ```bash
 RB=/Volumes/mac/python_code/longhorizon-autoresearch

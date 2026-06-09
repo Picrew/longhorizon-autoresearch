@@ -33,5 +33,8 @@ decision-loss curve).
 | 0018 | neftune-5 | Method lever: NEFTune embedding-noise regularisation (alpha 5) on the best recipe. | 0.68717 | decision_loss | ✅ | 90 | 1207.7 |
 | 0019 | baseline-v2-longeval | Reanchor on decision_loss_v2 (eval scores decision tokens up to 16384, chunked CE). Re-... | 0.67903 | decision_loss_v2 | ✅ | 76 | 1020.9 |
 | 0020 | truncation-tail | Now that eval sees beyond 8192: train on the END of long traces (truncation=tail keeps ... | 0.67753 | decision_loss_v2 | ✅ | 76 | 1020.8 |
+| 0021 | truncation-head-tail | Keep goal+recent context, drop the middle (head_tail) -- trains on both the goal setup ... | 0.67423 | decision_loss_v2 | ✅ | 76 | 1021.4 |
+| 0022 | late-weight-v2 | Re-test late-token loss weighting (1->2 ramp) under v2: upweighting late decisions shou... | 0.67784 | decision_loss_v2 |  | 75 | 1020.4 |
+| 0023 | ctx-8192-v2 | Re-test long context under v2: train ctx ->8192 (more context coverage, fewer steps). D... | 0.67568 | decision_loss_v2 |  | 55 | 1037.6 |
 
-_20 experiments logged; 16 on the decision-loss curve, 10 kept improvements._
+_23 experiments logged; 16 on the v1 (head@8192) curve, 5 on the v2 (long-horizon, to 16384) curve, 13 kept improvements total._

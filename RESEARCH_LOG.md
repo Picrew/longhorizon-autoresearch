@@ -232,4 +232,21 @@ Establishes the long-horizon curve's top from the v1-best recipe.
 longer ctx, v2 rewards true long-context training (the user's full-context intuition,
 finally measured); if 5120 still wins, more-steps still dominates even on the long eval.
 
+### v2 long-horizon levers — head_tail wins; the context/steps tradeoff is real
+- **0021** (truncation=head_tail): **0.67423**, kept (−0.0033, biggest v2 gain). Helped the
+  long bucket too (0.6808→0.6783). Keeping goal+recent and dropping the middle is the right
+  way to fit long traces into a fixed window.
+- **0022** (late-weight v2): 0.6778, discard — late-token upweighting fails again, even when
+  the eval rewards late decisions. Coverage (head_tail) beats reweighting.
+- **0023** (ctx 8192): 0.6757 overall, discarded — BUT the **long bucket hit 0.6754, the best
+  long number yet**. Only 55 steps (vs 76), so medium/short undertrained and dragged the
+  aggregate down. **Finding: long traces want more training context; the fixed step budget
+  makes it cost shorter-trace quality.** The user's full-context intuition, quantified.
+- Best = …+head_tail = **0.6742**.
+
+### exp 0025 / 0026 — head_tail's optimal context
+Since long traces like more context and head_tail is the winner, test head_tail at ctx 6144
+(0025) and 7168 (0026) vs 5120: does giving head_tail more coverage capture the long-bucket
+gain without losing too many steps?
+
 <!-- next entries appended at each steering check-in -->

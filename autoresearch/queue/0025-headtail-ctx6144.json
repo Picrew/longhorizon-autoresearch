@@ -1,0 +1,8 @@
+{
+  "slug": "headtail-ctx6144",
+  "hypothesis": "head_tail wins + long traces want more context: test head_tail at ctx 6144 (vs 5120). Capture long-bucket gain without losing too many steps.",
+  "base": "best",
+  "overrides": {
+    "max_length": 6144
+  }
+}

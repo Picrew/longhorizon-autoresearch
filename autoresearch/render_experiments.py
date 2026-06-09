@@ -47,10 +47,13 @@ def main() -> None:
             f"| {r.get('exp_id')} | {r.get('slug','')} | {hyp} | {m} | {kind} | {kept} | "
             f"{r.get('steps') or ''} | {r.get('train_seconds') or ''} |"
         )
-    n_kept = sum(1 for r in rows if r.get("kept") and r.get("metric_kind") == "decision_loss")
-    n_dec = sum(1 for r in rows if r.get("metric_kind") == "decision_loss")
+    dec_kinds = {"decision_loss", "decision_loss_v2"}
+    n_kept = sum(1 for r in rows if r.get("kept") and r.get("metric_kind") in dec_kinds)
+    n_v1 = sum(1 for r in rows if r.get("metric_kind") == "decision_loss")
+    n_v2 = sum(1 for r in rows if r.get("metric_kind") == "decision_loss_v2")
     lines.append("")
-    lines.append(f"_{len(rows)} experiments logged; {n_dec} on the decision-loss curve, {n_kept} kept improvements._")
+    lines.append(f"_{len(rows)} experiments logged; {n_v1} on the v1 (head@8192) curve, "
+                 f"{n_v2} on the v2 (long-horizon, to 16384) curve, {n_kept} kept improvements total._")
     OUT.write_text("\n".join(lines) + "\n")
     print(f"wrote {OUT} ({len(rows)} rows)")
 

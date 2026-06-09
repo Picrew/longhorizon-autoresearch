@@ -1,7 +1,7 @@
 # Current best method
 
-- best experiment: **0020**
-- held-out val loss (lower=better): **0.67753**
+- best experiment: **0021**
+- held-out val loss (lower=better): **0.67423**
 
 ## Config
 ```json
@@ -9,7 +9,7 @@
   "train_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/train.sft.jsonl",
   "val_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/val.sft.jsonl",
   "loss_on": "assistant",
-  "truncation": "tail",
+  "truncation": "head_tail",
   "max_length": 5120,
   "lora_r": 64,
   "lora_alpha": 128,
@@ -54,3 +54,4 @@
 - `0018` neftune-5: Method lever: NEFTune embedding-noise regularisation (alpha 5) on the best recipe. -> loss 0.68717
 - `0019` baseline-v2-longeval: Reanchor on decision_loss_v2 (eval scores decision tokens up to 16384, chunked CE). Re-score the current best recipe (assistant+lr4e-4+ctx5120+r64+neftune5) on the long-horizon-faithful metric; train_seconds 1020 to keep total <=30min with the heavier eval. -> loss 0.67903
 - `0020` truncation-tail: Now that eval sees beyond 8192: train on the END of long traces (truncation=tail keeps the trajectory's late decisions). Previously unmeasurable under head@8192 eval. -> loss 0.67753
+- `0021` truncation-head-tail: Keep goal+recent context, drop the middle (head_tail) -- trains on both the goal setup and the late payoff of long traces. -> loss 0.67423
