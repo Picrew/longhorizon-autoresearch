@@ -1,0 +1,9 @@
+{
+  "slug": "lora-r64",
+  "hypothesis": "Capacity still helping (r32 gave -0.009); push rank r32->r64, alpha->128.",
+  "base": "best",
+  "overrides": {
+    "lora_r": 64,
+    "lora_alpha": 128
+  }
+}

@@ -165,4 +165,24 @@ so horizon-independent — unlike the flawed cosine 0010).
 traces beyond 8192 via chunked cross-entropy (reanchor) so tail/head_tail truncation
 and other genuinely long-horizon method levers become measurable.
 
+### exp 0013 & 0014 results
+- **0013** (LoRA r16→r32 attn-only): **0.68925**, kept (−0.009). Capacity is a real,
+  fresh axis (long 0.708, med 0.658, short 0.787). → try r64.
+- **0014** (lr 5e-4): **0.68933**, discarded — tied with 4e-4 (+0.0001). **LR has peaked
+  at 4e-4; lock it.** No more LR experiments.
+- Best = assistant + lr4e-4 + ctx5120 + r32 = **0.689**. Curve 0.808→…→0.698→0.689 (7 kept).
+- (0015 ctx4096 and 0016 warmup5 still pending.)
+
+### exp 0017 — LoRA r32 → r64 (alpha 128)
+Capacity still helping; push rank once more before it plateaus.
+
+### exp 0018 — NEFTune noise alpha 5
+A training-method lever (embedding-noise regularisation) from METHODS.md; sometimes
+helps generalisation. Quick to test, low OOM risk.
+
+**Decision:** knob ridge is nearly done (LR locked, capacity ~1 step left). NEXT check-in,
+once 0015/0016/0017/0018 are read, execute the EVAL-WINDOW UPGRADE (chunked CE beyond
+8192, reanchor) and pivot the search to long-horizon method levers (truncation, late
+weighting re-tested on the faithful metric, decision-point upweighting).
+
 <!-- next entries appended at each steering check-in -->

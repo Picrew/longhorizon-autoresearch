@@ -1,0 +1,8 @@
+{
+  "slug": "neftune-5",
+  "hypothesis": "Method lever: NEFTune embedding-noise regularisation (alpha 5) on the best recipe.",
+  "base": "best",
+  "overrides": {
+    "neftune_noise_alpha": 5.0
+  }
+}
