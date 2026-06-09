@@ -37,3 +37,12 @@
 [2026-06-10 01:30:00] EXP 0009 KEPT  val_loss=0.71048 (was 0.71926, -0.00878)  steps=78  train_s=1205.8
 [2026-06-10 01:30:01] EXP 0010 START  slug=cosine-cooldown-64  base=best  hyp=Proper LR schedule on the lr2e-4 best: cosine decay over planned 64 steps with 3-step warmup.
 [2026-06-10 01:30:01] EXP 0010 overrides={"lr_scheduler_type": "cosine", "planned_steps": 64, "warmup_steps": 3}
+[2026-06-10 01:51:26] EXP 0010 DISCARD  val_loss=0.75848  running_best=0.71048  steps=64  train_s=994.9
+[2026-06-10 01:51:26] EXP 0011 START  slug=lr-4e-4  base=best  hyp=Keep climbing LR ridge: 3e-4 -> 4e-4 until it regresses.
+[2026-06-10 01:51:26] EXP 0011 overrides={"lr": 0.0004}
+[2026-06-10 02:16:32] EXP 0011 KEPT  val_loss=0.70361 (was 0.71048, -0.00687)  steps=78  train_s=1206.0
+[2026-06-10 02:16:32] EXP 0012 START  slug=ctx-5120  base=best  hyp=More throughput: train ctx ->5120 for more steps. Watch long bucket for the coverage floor.
+[2026-06-10 02:16:32] EXP 0012 overrides={"max_length": 5120}
+[2026-06-10 02:41:38] EXP 0012 KEPT  val_loss=0.69836 (was 0.70361, -0.00525)  steps=90  train_s=1206.9
+[2026-06-10 02:41:38] EXP 0013 START  slug=lora-r32-attn  base=best  hyp=Memory-safe capacity test (0007 OOM'd with MLP): LoRA r16->r32 alpha64, attn-only.
+[2026-06-10 02:41:38] EXP 0013 overrides={"lora_r": 32, "lora_alpha": 64}

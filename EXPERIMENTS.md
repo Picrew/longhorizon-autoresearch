@@ -22,5 +22,8 @@ decision-loss curve).
 | 0007 | lora-r32-all-linear | Test if capacity is the bottleneck: LoRA r16 attn-only -> r32 alpha64 with MLP targets ... | failed | full_seq |  |  |  |
 | 0008 | lr-3e-4 | Continue LR search: 2e-4 -> 3e-4 (undertraining confirmed by 0006). | 0.71926 | decision_loss | ✅ | 65 | 1217.4 |
 | 0009 | ctx-6144-throughput | Throughput: train ctx 8192->6144 to fit more optimizer steps in the fixed budget. Eval ... | 0.71048 | decision_loss | ✅ | 78 | 1205.8 |
+| 0010 | cosine-cooldown-64 | Proper LR schedule on the lr2e-4 best: cosine decay over planned 64 steps with 3-step w... | 0.75848 | decision_loss |  | 64 | 994.9 |
+| 0011 | lr-4e-4 | Keep climbing LR ridge: 3e-4 -> 4e-4 until it regresses. | 0.70361 | decision_loss | ✅ | 78 | 1206.0 |
+| 0012 | ctx-5120 | More throughput: train ctx ->5120 for more steps. Watch long bucket for the coverage fl... | 0.69836 | decision_loss | ✅ | 90 | 1206.9 |
 
-_9 experiments logged; 7 on the decision-loss curve, 5 kept improvements._
+_12 experiments logged; 10 on the decision-loss curve, 7 kept improvements._

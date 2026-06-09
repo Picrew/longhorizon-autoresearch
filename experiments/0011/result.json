@@ -1,0 +1,82 @@
+{
+  "exp_id": "0011",
+  "config": {
+    "train_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/train.sft.jsonl",
+    "val_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/val.sft.jsonl",
+    "loss_on": "assistant",
+    "truncation": "right",
+    "max_length": 6144,
+    "pos_weight_end": null,
+    "oversample": null,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "lr": 0.0004,
+    "lr_scheduler_type": "constant_with_warmup",
+    "warmup_steps": 0,
+    "warmup_ratio": 0.0,
+    "planned_steps": null,
+    "weight_decay": 0.0,
+    "optim": "paged_adamw_8bit",
+    "batch_size": 1,
+    "grad_accum": 8,
+    "max_grad_norm": 1.0,
+    "neftune_noise_alpha": null,
+    "attn_implementation": "sdpa",
+    "train_seconds": 1200,
+    "max_steps_cap": 100000,
+    "seed": 42,
+    "eval_limit": 0
+  },
+  "metric_kind": "decision_loss",
+  "primary_metric": 0.70361,
+  "val_overall": {
+    "rows": 303,
+    "dec_tokens": 649504,
+    "full_tokens": 1784638,
+    "decision_loss": 0.70361,
+    "decision_ppl": 2.021,
+    "decision_acc": 0.78913,
+    "full_loss": 1.20022
+  },
+  "val_by_bucket": {
+    "long_horizon": {
+      "rows": 110,
+      "dec_tokens": 306744,
+      "full_tokens": 886150,
+      "decision_loss": 0.71957,
+      "decision_ppl": 2.054,
+      "decision_acc": 0.78112,
+      "full_loss": 1.21435
+    },
+    "medium_agentic": {
+      "rows": 156,
+      "dec_tokens": 303265,
+      "full_tokens": 806529,
+      "decision_loss": 0.6734,
+      "decision_ppl": 1.961,
+      "decision_acc": 0.79974,
+      "full_loss": 1.16377
+    },
+    "short_format": {
+      "rows": 37,
+      "dec_tokens": 39495,
+      "full_tokens": 91959,
+      "decision_loss": 0.81159,
+      "decision_ppl": 2.251,
+      "decision_acc": 0.76984,
+      "full_loss": 1.38389
+    }
+  },
+  "train_loss": 0.7685228173549359,
+  "steps": 78,
+  "train_seconds": 1206.0,
+  "eval_seconds": 283.6,
+  "timestamp": "2026-06-10T02:16:31"
+}

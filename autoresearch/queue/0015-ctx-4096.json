@@ -1,0 +1,8 @@
+{
+  "slug": "ctx-4096",
+  "hypothesis": "Coverage-floor probe: train ctx ->4096 for more steps. Eval stays @8192. Watch long bucket -- if it regresses, lock the floor.",
+  "base": "best",
+  "overrides": {
+    "max_length": 4096
+  }
+}

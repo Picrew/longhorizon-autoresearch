@@ -1,0 +1,8 @@
+{
+  "slug": "lr-5e-4",
+  "hypothesis": "Keep climbing LR ridge: 4e-4 -> 5e-4.",
+  "base": "best",
+  "overrides": {
+    "lr": 0.0005
+  }
+}

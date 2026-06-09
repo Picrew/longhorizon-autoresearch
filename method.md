@@ -1,7 +1,7 @@
 # Current best method
 
-- best experiment: **0009**
-- held-out val loss (lower=better): **0.71048**
+- best experiment: **0012**
+- held-out val loss (lower=better): **0.69836**
 
 ## Config
 ```json
@@ -10,7 +10,7 @@
   "val_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/val.sft.jsonl",
   "loss_on": "assistant",
   "truncation": "right",
-  "max_length": 6144,
+  "max_length": 5120,
   "lora_r": 16,
   "lora_alpha": 32,
   "lora_dropout": 0.05,
@@ -20,7 +20,7 @@
     "v_proj",
     "o_proj"
   ],
-  "lr": 0.0003,
+  "lr": 0.0004,
   "lr_scheduler_type": "constant_with_warmup",
   "warmup_steps": 0,
   "warmup_ratio": 0.0,
@@ -47,3 +47,5 @@
 - `0006` lr-2e-4: Two long-horizon levers failed -> likely undertraining in the 64-step budget. Test learning faster: lr 1e-4 -> 2e-4 on the loss_on=assistant best. -> loss 0.73336
 - `0008` lr-3e-4: Continue LR search: 2e-4 -> 3e-4 (undertraining confirmed by 0006). -> loss 0.71926
 - `0009` ctx-6144-throughput: Throughput: train ctx 8192->6144 to fit more optimizer steps in the fixed budget. Eval stays fixed @8192; honest steps-vs-coverage test. Watch long bucket. -> loss 0.71048
+- `0011` lr-4e-4: Keep climbing LR ridge: 3e-4 -> 4e-4 until it regresses. -> loss 0.70361
+- `0012` ctx-5120: More throughput: train ctx ->5120 for more steps. Watch long bucket for the coverage floor. -> loss 0.69836

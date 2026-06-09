@@ -1,0 +1,8 @@
+{
+  "slug": "warmup-5",
+  "hypothesis": "Brief warmup (5 steps) to stabilize the now-high LR from step 1.",
+  "base": "best",
+  "overrides": {
+    "warmup_steps": 5
+  }
+}

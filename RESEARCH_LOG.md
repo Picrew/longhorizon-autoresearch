@@ -139,4 +139,30 @@ we've found the coverage floor for long traces; if not, steps keep winning.
 Re-ask the capacity question 0007 couldn't (it OOM'd with MLP targets at 8192). r32
 attn-only is cheap; tests whether more rank helps now that LR/steps are tuned.
 
+### exp 0010/0011/0012 results
+- **0010** (cosine cooldown): **0.758**, discarded — but FLAWED: planned_steps=64 capped
+  training to 64 steps (vs 78 at the wall-clock budget), so this conflated decay with
+  *less training*. Cosine not ruled out; a fair test needs planned_steps ≈ achievable
+  steps at that ctx. Lesson: don't set planned_steps below the budget.
+- **0011** (lr 4e-4): **0.70361**, kept (−0.007). LR still climbing → try 5e-4 (+warmup).
+- **0012** (ctx 5120): **0.69836**, kept (−0.005), 90 steps. Long bucket still improving
+  (0.720→0.715) — more steps keep beating coverage; floor not yet hit → try ctx 4096.
+- Best = assistant + lr4e-4 + ctx5120 = **0.698**. Curve now 0.808→...→0.698 (6 kept).
+
+### exp 0014 — lr 4e-4 → 5e-4
+Keep climbing; high LR may want warmup (see 0016).
+
+### exp 0015 — train ctx 5120 → 4096 (coverage-floor probe)
+Aggressive throughput. Eval stays @8192 (long-horizon). If the long bucket finally
+regresses, lock the floor (this is where the user's "full context matters" intuition
+would kick in); if not, more steps still win.
+
+### exp 0016 — warmup 5 steps
+A brief warmup often lets a higher LR train stably from step 1 (constant_with_warmup,
+so horizon-independent — unlike the flawed cosine 0010).
+
+**Next major move (planned):** once lr/ctx/warmup peak, upgrade the eval to score long
+traces beyond 8192 via chunked cross-entropy (reanchor) so tail/head_tail truncation
+and other genuinely long-horizon method levers become measurable.
+
 <!-- next entries appended at each steering check-in -->
