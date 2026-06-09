@@ -3,3 +3,14 @@
 [2026-06-09 20:34:08] EXP 0001 overrides={}
 [2026-06-09 20:59:15] EXP 0001 KEPT  val_loss=0.93794  steps=64  train_s=1215.5
 [2026-06-09 20:59:15] QUEUE EMPTY (1 done). Waiting for new specs...
+[2026-06-09 21:16:34] LOOP START max_experiments=40 data_root=/home/ljj/ssd1/ljj/research/llm-longhorizon-traces model=/home/ljj/ssd1/ljj/research/llm-longhorizon-traces/models/Qwen3-4B-Instruct-2507
+[2026-06-09 21:16:34] EXP 0002 REANCHOR: resetting running best before this run
+[2026-06-09 21:16:34] EXP 0002 START  slug=baseline-decision-loss  base=baseline  hyp=Re-anchor the curve on the decision-token metric: same recipe as 0001 (r16 attn-only, lr1e-4, loss_on=all) but scored on decision loss. This is the true top-of-curve.
+[2026-06-09 21:16:34] EXP 0002 overrides={}
+[2026-06-09 21:41:35] EXP 0002 KEPT  val_loss=0.80773  steps=64  train_s=1201.2
+[2026-06-09 21:41:35] EXP 0003 START  slug=loss-on-assistant  base=best  hyp=First method change: supervise only the agent's own tokens (mask system/user/tool-output). Smoke showed ~70% of tokens are observations -- noise to memorise; concentrating capacity on the ~30% decision tokens should lower decision loss.
+[2026-06-09 21:41:35] EXP 0003 overrides={"loss_on": "assistant"}
+[2026-06-09 22:06:35] EXP 0003 KEPT  val_loss=0.769 (was 0.80773, -0.03873)  steps=64  train_s=1200.2
+[2026-06-09 22:06:35] QUEUE EMPTY (3 done). Waiting for new specs...
+[2026-06-09 22:32:05] EXP 0004 START  slug=oversample-long2  base=baseline  hyp=Long bucket improved least under loss_on=assistant. Spend more of the fixed 64-step budget on long traces: oversample long_horizon x2 (on top of assistant-masking).
+[2026-06-09 22:32:05] EXP 0004 overrides={"loss_on": "assistant", "oversample": {"long_horizon": 2}}

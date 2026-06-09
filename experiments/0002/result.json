@@ -1,0 +1,80 @@
+{
+  "exp_id": "0002",
+  "config": {
+    "train_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/train.sft.jsonl",
+    "val_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/val.sft.jsonl",
+    "loss_on": "all",
+    "truncation": "right",
+    "max_length": 8192,
+    "lora_r": 16,
+    "lora_alpha": 32,
+    "lora_dropout": 0.05,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "lr": 0.0001,
+    "lr_scheduler_type": "constant_with_warmup",
+    "warmup_steps": 0,
+    "warmup_ratio": 0.0,
+    "planned_steps": null,
+    "weight_decay": 0.0,
+    "optim": "paged_adamw_8bit",
+    "batch_size": 1,
+    "grad_accum": 8,
+    "max_grad_norm": 1.0,
+    "neftune_noise_alpha": null,
+    "attn_implementation": "sdpa",
+    "train_seconds": 1200,
+    "max_steps_cap": 100000,
+    "seed": 42,
+    "eval_limit": 0
+  },
+  "metric_kind": "decision_loss",
+  "primary_metric": 0.80773,
+  "val_overall": {
+    "rows": 303,
+    "dec_tokens": 649504,
+    "full_tokens": 1784638,
+    "decision_loss": 0.80773,
+    "decision_ppl": 2.243,
+    "decision_acc": 0.76956,
+    "full_loss": 0.93813
+  },
+  "val_by_bucket": {
+    "long_horizon": {
+      "rows": 110,
+      "dec_tokens": 306744,
+      "full_tokens": 886150,
+      "decision_loss": 0.80866,
+      "decision_ppl": 2.245,
+      "decision_acc": 0.76455,
+      "full_loss": 0.93872
+    },
+    "medium_agentic": {
+      "rows": 156,
+      "dec_tokens": 303265,
+      "full_tokens": 806529,
+      "decision_loss": 0.78276,
+      "decision_ppl": 2.188,
+      "decision_acc": 0.77835,
+      "full_loss": 0.91685
+    },
+    "short_format": {
+      "rows": 37,
+      "dec_tokens": 39495,
+      "full_tokens": 91959,
+      "decision_loss": 0.99224,
+      "decision_ppl": 2.697,
+      "decision_acc": 0.74098,
+      "full_loss": 1.11916
+    }
+  },
+  "train_loss": 1.0744337029755116,
+  "steps": 64,
+  "train_seconds": 1201.2,
+  "eval_seconds": 283.5,
+  "timestamp": "2026-06-09T21:41:34"
+}

@@ -33,7 +33,7 @@ from pathlib import Path
 
 import torch
 import torch.nn.functional as F
-from datasets import load_dataset
+from datasets import concatenate_datasets, load_dataset
 from peft import LoraConfig, get_peft_model, prepare_model_for_kbit_training
 from transformers import (
     AutoModelForCausalLM,
@@ -61,6 +61,8 @@ DEFAULTS: dict = {
     "loss_on": "all",          # "all" | "assistant"  (mask non-agent tokens)
     "truncation": "right",     # "right" (keep head) | "tail" (keep end) | "head_tail"
     "max_length": 8192,        # TRAIN sequence cap (a method knob; eval is fixed)
+    "pos_weight_end": None,    # late-token loss weighting: linear ramp 1.0 -> this over the seq (None = uniform)
+    "oversample": None,        # {"long_horizon": 2, ...} duplicate examples of a length bucket N times
     # --- lora ---
     "lora_r": 16,
     "lora_alpha": 32,
@@ -153,6 +155,48 @@ class WallClockStopper(TrainerCallback):
         if self.t0 is not None and (time.monotonic() - self.t0) >= self.limit_seconds:
             control.should_training_stop = True
         return control
+
+
+class WeightedLossTrainer(Trainer):
+    """Token-mean causal-LM loss with optional position weighting.
+
+    With pos_weight_end set, supervised tokens are weighted by a linear ramp from
+    1.0 (start of the sequence) to pos_weight_end (end), so decisions made deeper
+    into the trajectory -- where goal drift / quality decay bite -- count more.
+    With pos_weight_end=None this is plain token-mean CE (matches the default)."""
+
+    def __init__(self, *args, pos_weight_end=None, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.pos_weight_end = pos_weight_end
+
+    def compute_loss(self, model, inputs, return_outputs=False, num_items_in_batch=None):
+        if self.pos_weight_end is None:  # exactly the default token-mean loss
+            return super().compute_loss(model, inputs, return_outputs=return_outputs,
+                                        num_items_in_batch=num_items_in_batch)
+        labels = inputs.pop("labels")
+        outputs = model(**inputs)
+        logits = outputs.logits
+        shift_logits = logits[:, :-1, :].contiguous()
+        shift_labels = labels[:, 1:].contiguous()
+        b, lm1, v = shift_logits.shape
+        ce = F.cross_entropy(
+            shift_logits.view(-1, v), shift_labels.view(-1),
+            ignore_index=-100, reduction="none",
+        ).view(b, lm1)
+        valid = (shift_labels != -100).to(ce.dtype)
+        pos = torch.arange(lm1, device=ce.device, dtype=ce.dtype) / max(lm1 - 1, 1)
+        raw_w = (1.0 + (float(self.pos_weight_end) - 1.0) * pos).unsqueeze(0) * valid
+        # normalise weights to mean 1 over supervised tokens so the loss SCALE
+        # (hence effective LR) matches the uniform baseline -- only the *relative*
+        # late-token emphasis changes.
+        w = raw_w * (valid.sum().clamp_min(1.0) / raw_w.sum().clamp_min(1.0))
+        if num_items_in_batch is not None:
+            # HF won't divide by grad_accum when num_items_in_batch is given; it
+            # expects a globally-normalised sum. Match that convention.
+            loss = (ce * w).sum() / num_items_in_batch
+        else:
+            loss = (ce * w).sum() / w.sum().clamp_min(1.0)
+        return (loss, outputs) if return_outputs else loss
 
 
 # ------------------------------ eval -----------------------------------------
@@ -286,6 +330,15 @@ def main() -> None:
         return {"input_ids": ids, "labels": labels}
 
     raw = load_dataset("json", data_files={"train": str(train_file)})["train"]
+    # length-bucket oversampling: spend more of the fixed step budget on chosen
+    # buckets (e.g. long traces) by duplicating their examples before shuffling.
+    oversample = cfg.get("oversample") or {}
+    if oversample:
+        parts = [raw]
+        for bucket, factor in oversample.items():
+            sub = raw.filter(lambda r, b=bucket: r.get("length_bucket") == b)
+            parts.extend([sub] * (int(factor) - 1))
+        raw = concatenate_datasets(parts)
     train_ds = raw.map(encode, remove_columns=raw.column_names, num_proc=4, desc="encode")
 
     collator = DataCollatorForSeq2Seq(tokenizer, padding="longest", label_pad_token_id=-100)
@@ -320,9 +373,10 @@ def main() -> None:
         dataloader_num_workers=2,
     )
 
-    trainer = Trainer(
+    trainer = WeightedLossTrainer(
         model=model, args=targs, train_dataset=train_ds,
         data_collator=collator, callbacks=[WallClockStopper(float(cfg["train_seconds"]))],
+        pos_weight_end=cfg.get("pos_weight_end"),
     )
 
     t0 = time.time()

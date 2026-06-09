@@ -1,0 +1,11 @@
+{
+  "slug": "oversample-long2",
+  "hypothesis": "Long bucket improved least under loss_on=assistant. Spend more of the fixed 64-step budget on long traces: oversample long_horizon x2 (on top of assistant-masking).",
+  "base": "baseline",
+  "overrides": {
+    "loss_on": "assistant",
+    "oversample": {
+      "long_horizon": 2
+    }
+  }
+}

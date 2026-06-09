@@ -45,4 +45,28 @@ Single change vs the 0002 anchor, so attribution is clean. If it wins, the next
 question is *where* the gain lands (per-bucket) → likely points at truncation or
 late-token weighting next.
 
+### exp 0002 & 0003 results
+- **0002** (decision-loss anchor): decision loss **0.80773**. Per bucket: long 0.809,
+  medium 0.783, short 0.992. (Note: the smoke showed only ~30% of tokens are agent
+  decisions.)
+- **0003** (loss_on=assistant): decision loss **0.769**, **kept (−0.039)**. Per bucket:
+  long 0.774 (−0.034), medium 0.743 (−0.040), short 0.927 (−0.065).
+- **Reading:** masking the loss to the agent's own tokens helps everywhere, but
+  **least on the long bucket** — exactly where long-horizon capability lives and
+  where the most headroom remains. In long traces the decision tokens are sparse
+  and sit late in a context dominated by observations, and the ~64-step budget
+  barely touches them.
+
+### exp 0004 — oversample long traces ×2
+**Chosen because:** directly acts on "long helped least" — give the fixed step
+budget more exposure to long traces by duplicating long_horizon examples ×2 (on
+top of assistant-masking). Clean single change vs the 0003 recipe.
+
+### exp 0005 — late-token loss weighting (1→2 ramp)
+**Chosen because:** the long-horizon thesis is that quality decays and goals drift
+*late* in a trajectory. Upweight decision tokens deeper in the context so the
+model is pushed to stay sharp there. Weights are scale-matched to mean-1 (only the
+relative emphasis changes; effective LR unchanged — verified the train-loss scale
+after fixing a grad-accum normalisation bug in the custom weighted loss).
+
 <!-- next entries appended at each steering check-in -->

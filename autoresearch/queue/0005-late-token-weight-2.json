@@ -1,0 +1,9 @@
+{
+  "slug": "late-token-weight-2",
+  "hypothesis": "Quality decay / goal drift happen late in a trajectory. Upweight later-in-context decision tokens (linear 1->2 ramp) on top of assistant-masking. Scale-matched so only the relative emphasis changes.",
+  "base": "baseline",
+  "overrides": {
+    "loss_on": "assistant",
+    "pos_weight_end": 2.0
+  }
+}

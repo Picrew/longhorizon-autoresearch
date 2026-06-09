@@ -14,5 +14,7 @@ decision-loss curve).
 |---|------|------------|--------|------|------|-------|---------|
 
 | 0001 | baseline | naive QLoRA: r16 attn-only, lr1e-4, no warmup, no packing | 0.93794 | full_seq | ✅ | 64 | 1215.5 |
+| 0002 | baseline-decision-loss | Re-anchor the curve on the decision-token metric: same recipe as 0001 (r16 attn-only, l... | 0.80773 | decision_loss | ✅ | 64 | 1201.2 |
+| 0003 | loss-on-assistant | First method change: supervise only the agent's own tokens (mask system/user/tool-outpu... | 0.76900 | decision_loss | ✅ | 64 | 1200.2 |
 
-_1 experiments logged; 0 on the decision-loss curve, 0 kept improvements._
+_3 experiments logged; 2 on the decision-loss curve, 2 kept improvements._
