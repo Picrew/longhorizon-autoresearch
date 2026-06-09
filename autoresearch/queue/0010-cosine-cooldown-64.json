@@ -1,0 +1,10 @@
+{
+  "slug": "cosine-cooldown-64",
+  "hypothesis": "Proper LR schedule on the lr2e-4 best: cosine decay over planned 64 steps with 3-step warmup.",
+  "base": "best",
+  "overrides": {
+    "lr_scheduler_type": "cosine",
+    "planned_steps": 64,
+    "warmup_steps": 3
+  }
+}

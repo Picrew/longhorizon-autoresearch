@@ -21,3 +21,13 @@
 [2026-06-09 23:22:47] QUEUE EMPTY (5 done). Waiting for new specs...
 [2026-06-09 23:36:17] EXP 0006 START  slug=lr-2e-4  base=best  hyp=Two long-horizon levers failed -> likely undertraining in the 64-step budget. Test learning faster: lr 1e-4 -> 2e-4 on the loss_on=assistant best.
 [2026-06-09 23:36:17] EXP 0006 overrides={"lr": 0.0002}
+[2026-06-10 00:01:34] EXP 0006 KEPT  val_loss=0.73336 (was 0.769, -0.03564)  steps=65  train_s=1217.6
+[2026-06-10 00:01:34] EXP 0007 START  slug=lora-r32-all-linear  base=best  hyp=Test if capacity is the bottleneck: LoRA r16 attn-only -> r32 alpha64 with MLP targets (gate/up/down) on the loss_on=assistant best.
+[2026-06-10 00:01:34] EXP 0007 overrides={"lora_r": 32, "lora_alpha": 64, "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj", "gate_proj", "up_proj", "down_proj"]}
+[2026-06-10 00:02:07] EXP 0007 FAILED rc=1; tail: . Of the allocated memory 16.65 GiB is allocated by PyTorch, and 2.18 GiB is reserved by PyTorch but unallocated. If reserved but unallocated memory is large try setting PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True to avoid fragmentation.  See documentation for Memory Management  (https://pytorch.org/docs/stable/notes/cuda.html#environment-variables)
+
+  0%|          | 0/100000 [00:12<?, ?it/s]
+[2026-06-10 00:02:07] EXP 0007 DISCARD  val_loss=None  running_best=0.73336  steps=None  train_s=None
+[2026-06-10 00:02:08] QUEUE EMPTY (7 done). Waiting for new specs...
+[2026-06-10 00:39:38] EXP 0008 START  slug=lr-3e-4  base=best  hyp=Continue LR search: 2e-4 -> 3e-4 (undertraining confirmed by 0006).
+[2026-06-10 00:39:38] EXP 0008 overrides={"lr": 0.0003}

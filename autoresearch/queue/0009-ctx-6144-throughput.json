@@ -1,0 +1,8 @@
+{
+  "slug": "ctx-6144-throughput",
+  "hypothesis": "Throughput: train ctx 8192->6144 to fit more optimizer steps in the fixed budget. Eval stays fixed @8192; honest steps-vs-coverage test. Watch long bucket.",
+  "base": "best",
+  "overrides": {
+    "max_length": 6144
+  }
+}

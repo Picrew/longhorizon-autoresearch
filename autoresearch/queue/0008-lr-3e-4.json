@@ -1,0 +1,8 @@
+{
+  "slug": "lr-3e-4",
+  "hypothesis": "Continue LR search: 2e-4 -> 3e-4 (undertraining confirmed by 0006).",
+  "base": "best",
+  "overrides": {
+    "lr": 0.0003
+  }
+}

@@ -93,4 +93,28 @@ behaviour. Add MLP targets (gate/up/down) and r32/α64. If this helps, capacity 
 the bottleneck → tune rank/placement; if not, capacity is fine and it's an
 optimisation/throughput problem.
 
+### exp 0006 & 0007 results — undertraining confirmed
+- **0006** (lr 1e-4 → 2e-4): **0.73336**, **kept (−0.0356)** — the biggest gain after
+  assistant-masking. Helped every bucket: long 0.744 (−0.030), medium 0.706 (−0.037),
+  short 0.863 (−0.064). **The bottleneck was undertraining**, exactly as the 0004/0005
+  failures implied: with only ~64 steps, learning faster beats spending the budget on
+  long/late tokens.
+- **0007** (r32 + all-linear targets): **OOM / FAILED** — r32 with MLP targets at 8192
+  ctx + 4-bit + grad-ckpt exceeded 24 GB. Capacity question unanswered; keep capacity
+  tests memory-safe (attn-only r32, or lower ctx, or expandable_segments).
+- **Direction:** push the undertraining lever. (1) more LR, (2) a proper schedule, (3)
+  more steps per budget (throughput). New best to stack on = 0006 (lr 2e-4).
+
+### exp 0008 — lr 2e-4 → 3e-4
+Continue the LR search to find the peak before it overshoots.
+
+### exp 0009 — train ctx 8192 → 6144 (throughput)
+More optimizer steps per fixed budget. The eval stays fixed @8192, so this is an
+honest test of the steps-vs-coverage trade-off for long traces (does more training
+beat full per-trace context?). Watch the long_horizon bucket specifically.
+
+### exp 0010 — cosine cooldown (lr 2e-4, planned 64 steps, 3-step warmup)
+A real LR schedule: warm up briefly then decay over the run. Standard cooldown often
+buys a little once the LR magnitude is right.
+
 <!-- next entries appended at each steering check-in -->

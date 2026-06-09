@@ -18,5 +18,7 @@ decision-loss curve).
 | 0003 | loss-on-assistant | First method change: supervise only the agent's own tokens (mask system/user/tool-outpu... | 0.76900 | decision_loss | ✅ | 64 | 1200.2 |
 | 0004 | oversample-long2 | Long bucket improved least under loss_on=assistant. Spend more of the fixed 64-step bud... | 0.77760 | decision_loss |  | 60 | 1217.7 |
 | 0005 | late-token-weight-2 | Quality decay / goal drift happen late in a trajectory. Upweight later-in-context decis... | 0.77317 | decision_loss |  | 64 | 1215.5 |
+| 0006 | lr-2e-4 | Two long-horizon levers failed -> likely undertraining in the 64-step budget. Test lear... | 0.73336 | decision_loss | ✅ | 65 | 1217.6 |
+| 0007 | lora-r32-all-linear | Test if capacity is the bottleneck: LoRA r16 attn-only -> r32 alpha64 with MLP targets ... | failed | full_seq |  |  |  |
 
-_5 experiments logged; 4 on the decision-loss curve, 2 kept improvements._
+_7 experiments logged; 5 on the decision-loss curve, 3 kept improvements._

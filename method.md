@@ -1,7 +1,7 @@
 # Current best method
 
-- best experiment: **0003**
-- held-out val loss (lower=better): **0.769**
+- best experiment: **0006**
+- held-out val loss (lower=better): **0.73336**
 
 ## Config
 ```json
@@ -20,7 +20,7 @@
     "v_proj",
     "o_proj"
   ],
-  "lr": 0.0001,
+  "lr": 0.0002,
   "lr_scheduler_type": "constant_with_warmup",
   "warmup_steps": 0,
   "warmup_ratio": 0.0,
@@ -44,3 +44,4 @@
 - `0001` baseline: naive QLoRA: r16 attn-only, lr1e-4, no warmup, no packing -> loss 0.93794
 - `0002` baseline-decision-loss: Re-anchor the curve on the decision-token metric: same recipe as 0001 (r16 attn-only, lr1e-4, loss_on=all) but scored on decision loss. This is the true top-of-curve. -> loss 0.80773
 - `0003` loss-on-assistant: First method change: supervise only the agent's own tokens (mask system/user/tool-output). Smoke showed ~70% of tokens are observations -- noise to memorise; concentrating capacity on the ~30% decision tokens should lower decision loss. -> loss 0.769
+- `0006` lr-2e-4: Two long-horizon levers failed -> likely undertraining in the 64-step budget. Test learning faster: lr 1e-4 -> 2e-4 on the loss_on=assistant best. -> loss 0.73336
