@@ -1,0 +1,8 @@
+{
+  "slug": "lr-2e-4",
+  "hypothesis": "Two long-horizon levers failed -> likely undertraining in the 64-step budget. Test learning faster: lr 1e-4 -> 2e-4 on the loss_on=assistant best.",
+  "base": "best",
+  "overrides": {
+    "lr": 0.0002
+  }
+}

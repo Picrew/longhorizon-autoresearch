@@ -14,3 +14,10 @@
 [2026-06-09 22:06:35] QUEUE EMPTY (3 done). Waiting for new specs...
 [2026-06-09 22:32:05] EXP 0004 START  slug=oversample-long2  base=baseline  hyp=Long bucket improved least under loss_on=assistant. Spend more of the fixed 64-step budget on long traces: oversample long_horizon x2 (on top of assistant-masking).
 [2026-06-09 22:32:05] EXP 0004 overrides={"loss_on": "assistant", "oversample": {"long_horizon": 2}}
+[2026-06-09 22:57:31] EXP 0004 DISCARD  val_loss=0.7776  running_best=0.769  steps=60  train_s=1217.7
+[2026-06-09 22:57:32] EXP 0005 START  slug=late-token-weight-2  base=baseline  hyp=Quality decay / goal drift happen late in a trajectory. Upweight later-in-context decision tokens (linear 1->2 ramp) on top of assistant-masking. Scale-matched so only the relative emphasis changes.
+[2026-06-09 22:57:32] EXP 0005 overrides={"loss_on": "assistant", "pos_weight_end": 2.0}
+[2026-06-09 23:22:47] EXP 0005 DISCARD  val_loss=0.77317  running_best=0.769  steps=64  train_s=1215.5
+[2026-06-09 23:22:47] QUEUE EMPTY (5 done). Waiting for new specs...
+[2026-06-09 23:36:17] EXP 0006 START  slug=lr-2e-4  base=best  hyp=Two long-horizon levers failed -> likely undertraining in the 64-step budget. Test learning faster: lr 1e-4 -> 2e-4 on the loss_on=assistant best.
+[2026-06-09 23:36:17] EXP 0006 overrides={"lr": 0.0002}

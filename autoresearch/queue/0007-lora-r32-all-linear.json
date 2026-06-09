@@ -1,0 +1,18 @@
+{
+  "slug": "lora-r32-all-linear",
+  "hypothesis": "Test if capacity is the bottleneck: LoRA r16 attn-only -> r32 alpha64 with MLP targets (gate/up/down) on the loss_on=assistant best.",
+  "base": "best",
+  "overrides": {
+    "lora_r": 32,
+    "lora_alpha": 64,
+    "target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj",
+      "gate_proj",
+      "up_proj",
+      "down_proj"
+    ]
+  }
+}

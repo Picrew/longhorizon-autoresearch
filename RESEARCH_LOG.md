@@ -69,4 +69,28 @@ model is pushed to stay sharp there. Weights are scale-matched to mean-1 (only t
 relative emphasis changes; effective LR unchanged — verified the train-loss scale
 after fixing a grad-accum normalisation bug in the custom weighted loss).
 
+### exp 0004 & 0005 results — both discarded, and that's the signal
+- **0004** (oversample long×2): **0.7776**, discarded. Every bucket got *worse*,
+  including long (0.779 vs 0.774). In a ~64-step budget, duplicating long traces
+  trades diversity for repetition → worse generalisation. Also ran fewer steps (60).
+- **0005** (late-token weight 1→2): **0.77317**, discarded. Also worse across buckets
+  (long 0.778). Upweighting late tokens de-emphasises the early/mid decisions the
+  fixed head-eval rewards.
+- **Reading:** the two intuitive "spend more on long/late" levers both hurt. So the
+  long-bucket headroom is **not** an exposure or late-emphasis problem within the
+  8192 window — the likely bottleneck is simply **undertraining** (64 steps is tiny)
+  and/or **LoRA capacity**. Next: diagnose that fork before touching the eval window.
+
+### exp 0006 — lr 1e-4 → 2e-4
+**Chosen because:** in a step-limited budget the dominant question is how much the
+model learns per step. grad-norms were healthy (~0.7–0.9) at 1e-4, so there's room.
+If 2e-4 lowers loss broadly, undertraining is the bottleneck → pursue schedule /
+throughput (more steps per budget) next.
+
+### exp 0007 — LoRA r32 + all-linear targets
+**Chosen because:** r16 on attn-only may be too little capacity to fit decision
+behaviour. Add MLP targets (gate/up/down) and r32/α64. If this helps, capacity is
+the bottleneck → tune rank/placement; if not, capacity is fine and it's an
+optimisation/throughput problem.
+
 <!-- next entries appended at each steering check-in -->
