@@ -1,0 +1,8 @@
+{
+  "slug": "ctx-8192-v2",
+  "hypothesis": "Re-test long context under v2: train ctx ->8192 (more context coverage, fewer steps). Does the long bucket now improve when the eval tests decisions up to 16384?",
+  "base": "best",
+  "overrides": {
+    "max_length": 8192
+  }
+}

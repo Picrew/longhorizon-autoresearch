@@ -1,0 +1,8 @@
+{
+  "slug": "ctx-6144-v2",
+  "hypothesis": "Intermediate context under v2: ctx ->6144 to bracket the v2-optimal training context (5120 vs 6144 vs 8192).",
+  "base": "best",
+  "overrides": {
+    "max_length": 6144
+  }
+}

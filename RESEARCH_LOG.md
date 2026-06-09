@@ -215,4 +215,21 @@ Establishes the long-horizon curve's top from the v1-best recipe.
 - **0022 late-token weighting (1→2)**: re-test 0005 under v2; upweighting late
   decisions should now pay off when the metric rewards late-trajectory quality.
 
+### v2 results begin
+- **0019** (v2 anchor, best recipe scored to 16384): **0.67903** (long 0.681, med 0.662,
+  short 0.786). Total wall 1462 s (train 1021 + eval 425) — comfortably ≤30 min.
+- **0020** (truncation=tail): **0.67753**, kept (−0.0015), but the **long bucket was flat**
+  (0.681→0.6808); the gain came from medium. At ctx5120, tail-training just swaps head
+  decisions for tail ones.
+- **Key realisation the v2 metric exposes:** the model trains on ≤5120 tokens of context
+  but v2 evaluates decisions made with up to 16384 tokens. That train/eval context
+  mismatch is the long-horizon gap. Under v1 (head@8192 eval) shorter ctx won because
+  more-steps dominated and the eval never tested long context. Under v2 it should pay to
+  train on more context → re-test ctx upward.
+
+### exp 0023 / 0024 — re-test training context length under v2
+0023 ctx 8192, 0024 ctx 6144 (vs the current 5120). If the long bucket now improves with
+longer ctx, v2 rewards true long-context training (the user's full-context intuition,
+finally measured); if 5120 still wins, more-steps still dominates even on the long eval.
+
 <!-- next entries appended at each steering check-in -->
