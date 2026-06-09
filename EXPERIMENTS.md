@@ -30,5 +30,6 @@ decision-loss curve).
 | 0015 | ctx-4096 | Coverage-floor probe: train ctx ->4096 for more steps. Eval stays @8192. Watch long buc... | 0.68985 | decision_loss |  | 110 | 1201.4 |
 | 0016 | warmup-5 | Brief warmup (5 steps) to stabilize the now-high LR from step 1. | 0.69172 | decision_loss |  | 90 | 1206.1 |
 | 0017 | lora-r64 | Capacity still helping (r32 gave -0.009); push rank r32->r64, alpha->128. | 0.68860 | decision_loss | ✅ | 90 | 1207.8 |
+| 0018 | neftune-5 | Method lever: NEFTune embedding-noise regularisation (alpha 5) on the best recipe. | 0.68717 | decision_loss | ✅ | 90 | 1207.7 |
 
-_17 experiments logged; 15 on the decision-loss curve, 9 kept improvements._
+_18 experiments logged; 16 on the decision-loss curve, 10 kept improvements._

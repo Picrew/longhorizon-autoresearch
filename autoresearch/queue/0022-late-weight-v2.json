@@ -1,0 +1,8 @@
+{
+  "slug": "late-weight-v2",
+  "hypothesis": "Re-test late-token loss weighting (1->2 ramp) under v2: upweighting late decisions should finally help now that the eval rewards late-trajectory quality.",
+  "base": "best",
+  "overrides": {
+    "pos_weight_end": 2.0
+  }
+}

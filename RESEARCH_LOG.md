@@ -185,4 +185,34 @@ once 0015/0016/0017/0018 are read, execute the EVAL-WINDOW UPGRADE (chunked CE b
 8192, reanchor) and pivot the search to long-horizon method levers (truncation, late
 weighting re-tested on the faithful metric, decision-point upweighting).
 
+### exp 0015/0016/0017/0018 results — knob ridge done
+- **0015** (ctx 4096): 0.690, discard. 110 steps but the **long bucket regressed**
+  (0.710 vs 0.708) — over-truncation. **Coverage floor = 5120**; the user's
+  full-context intuition kicks in below it.
+- **0016** (warmup 5): 0.692, discard. Constant LR from step 0 is fine for LoRA.
+- **0017** (r64): 0.6886, kept but only −0.0007 → capacity plateauing.
+- **0018** (NEFTune α=5): **0.68717**, kept (−0.0014). Small regularisation win.
+- v1 best recipe = assistant + lr4e-4 + ctx5120 + r64 + neftune5 = **0.687**.
+  v1 curve: 0.808→…→0.687 (9 kept, ~15% relative). Knobs exhausted.
+
+### EVAL-WINDOW UPGRADE (v2) — the long-horizon-faithfulness fix
+The v1 metric only scored the first 8192 tokens, so late-trajectory decisions
+(the actual long-horizon test) were invisible, and truncation levers were
+unmeasurable. v2: `score_heldout` now scores decision tokens up to **16384** via
+**chunked cross-entropy** (2048-position chunks) to avoid the [seq,vocab] float32
+OOM. Smoke on the 6 longest val traces (29k–32k tokens, capped at 16k): no OOM
+(peak 20.4 GB), eval 22.7 s/6 rows; those long traces are only ~12.5% decision
+tokens. metric_kind='decision_loss_v2'; train trimmed to 1020 s to keep total
+≤30 min with the heavier eval. The curve re-anchors here.
+
+### exp 0019 — v2 reanchor (current best recipe, scored on v2)
+Establishes the long-horizon curve's top from the v1-best recipe.
+
+### exp 0020/0021/0022 — long-horizon levers, now measurable
+- **0020 truncation=tail**: train on the END of long traces (late decisions) — the
+  eval can finally see them.
+- **0021 truncation=head_tail**: keep goal + recent context, drop the middle.
+- **0022 late-token weighting (1→2)**: re-test 0005 under v2; upweighting late
+  decisions should now pay off when the metric rewards late-trajectory quality.
+
 <!-- next entries appended at each steering check-in -->

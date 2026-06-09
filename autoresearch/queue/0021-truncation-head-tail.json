@@ -1,0 +1,8 @@
+{
+  "slug": "truncation-head-tail",
+  "hypothesis": "Keep goal+recent context, drop the middle (head_tail) -- trains on both the goal setup and the late payoff of long traces.",
+  "base": "best",
+  "overrides": {
+    "truncation": "head_tail"
+  }
+}

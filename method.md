@@ -1,7 +1,7 @@
 # Current best method
 
-- best experiment: **0017**
-- held-out val loss (lower=better): **0.6886**
+- best experiment: **0018**
+- held-out val loss (lower=better): **0.68717**
 
 ## Config
 ```json
@@ -30,7 +30,7 @@
   "batch_size": 1,
   "grad_accum": 8,
   "max_grad_norm": 1.0,
-  "neftune_noise_alpha": null,
+  "neftune_noise_alpha": 5.0,
   "attn_implementation": "sdpa",
   "train_seconds": 1200,
   "max_steps_cap": 100000,
@@ -51,3 +51,4 @@
 - `0012` ctx-5120: More throughput: train ctx ->5120 for more steps. Watch long bucket for the coverage floor. -> loss 0.69836
 - `0013` lora-r32-attn: Memory-safe capacity test (0007 OOM'd with MLP): LoRA r16->r32 alpha64, attn-only. -> loss 0.68925
 - `0017` lora-r64: Capacity still helping (r32 gave -0.009); push rank r32->r64, alpha->128. -> loss 0.6886
+- `0018` neftune-5: Method lever: NEFTune embedding-noise regularisation (alpha 5) on the best recipe. -> loss 0.68717

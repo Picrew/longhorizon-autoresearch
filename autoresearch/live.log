@@ -61,3 +61,8 @@
 [2026-06-10 04:47:02] EXP 0017 KEPT  val_loss=0.6886 (was 0.68925, -0.00065)  steps=90  train_s=1207.8
 [2026-06-10 04:47:02] EXP 0018 START  slug=neftune-5  base=best  hyp=Method lever: NEFTune embedding-noise regularisation (alpha 5) on the best recipe.
 [2026-06-10 04:47:02] EXP 0018 overrides={"neftune_noise_alpha": 5.0}
+[2026-06-10 05:12:10] EXP 0018 KEPT  val_loss=0.68717 (was 0.6886, -0.00143)  steps=90  train_s=1207.7
+[2026-06-10 05:12:10] QUEUE EMPTY (18 done). Waiting for new specs...
+[2026-06-10 05:25:40] EXP 0019 REANCHOR: resetting running best before this run
+[2026-06-10 05:25:40] EXP 0019 START  slug=baseline-v2-longeval  base=best  hyp=Reanchor on decision_loss_v2 (eval scores decision tokens up to 16384, chunked CE). Re-score the current best recipe (assistant+lr4e-4+ctx5120+r64+neftune5) on the long-horizon-faithful metric; train_seconds 1020 to keep total <=30min with the heavier eval.
+[2026-06-10 05:25:40] EXP 0019 overrides={"train_seconds": 1020}

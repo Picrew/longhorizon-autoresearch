@@ -1,0 +1,9 @@
+{
+  "slug": "baseline-v2-longeval",
+  "hypothesis": "Reanchor on decision_loss_v2 (eval scores decision tokens up to 16384, chunked CE). Re-score the current best recipe (assistant+lr4e-4+ctx5120+r64+neftune5) on the long-horizon-faithful metric; train_seconds 1020 to keep total <=30min with the heavier eval.",
+  "base": "best",
+  "overrides": {
+    "train_seconds": 1020
+  },
+  "reanchor": true
+}

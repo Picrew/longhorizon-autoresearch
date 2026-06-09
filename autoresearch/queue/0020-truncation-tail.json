@@ -1,0 +1,8 @@
+{
+  "slug": "truncation-tail",
+  "hypothesis": "Now that eval sees beyond 8192: train on the END of long traces (truncation=tail keeps the trajectory's late decisions). Previously unmeasurable under head@8192 eval.",
+  "base": "best",
+  "overrides": {
+    "truncation": "tail"
+  }
+}
