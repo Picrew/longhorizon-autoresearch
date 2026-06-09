@@ -31,5 +31,7 @@ decision-loss curve).
 | 0016 | warmup-5 | Brief warmup (5 steps) to stabilize the now-high LR from step 1. | 0.69172 | decision_loss |  | 90 | 1206.1 |
 | 0017 | lora-r64 | Capacity still helping (r32 gave -0.009); push rank r32->r64, alpha->128. | 0.68860 | decision_loss | ✅ | 90 | 1207.8 |
 | 0018 | neftune-5 | Method lever: NEFTune embedding-noise regularisation (alpha 5) on the best recipe. | 0.68717 | decision_loss | ✅ | 90 | 1207.7 |
+| 0019 | baseline-v2-longeval | Reanchor on decision_loss_v2 (eval scores decision tokens up to 16384, chunked CE). Re-... | 0.67903 | decision_loss_v2 | ✅ | 76 | 1020.9 |
+| 0020 | truncation-tail | Now that eval sees beyond 8192: train on the END of long traces (truncation=tail keeps ... | 0.67753 | decision_loss_v2 | ✅ | 76 | 1020.8 |
 
-_18 experiments logged; 16 on the decision-loss curve, 10 kept improvements._
+_20 experiments logged; 16 on the decision-loss curve, 10 kept improvements._
