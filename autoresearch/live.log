@@ -31,3 +31,9 @@
 [2026-06-10 00:02:08] QUEUE EMPTY (7 done). Waiting for new specs...
 [2026-06-10 00:39:38] EXP 0008 START  slug=lr-3e-4  base=best  hyp=Continue LR search: 2e-4 -> 3e-4 (undertraining confirmed by 0006).
 [2026-06-10 00:39:38] EXP 0008 overrides={"lr": 0.0003}
+[2026-06-10 01:04:54] EXP 0008 KEPT  val_loss=0.71926 (was 0.73336, -0.0141)  steps=65  train_s=1217.4
+[2026-06-10 01:04:55] EXP 0009 START  slug=ctx-6144-throughput  base=best  hyp=Throughput: train ctx 8192->6144 to fit more optimizer steps in the fixed budget. Eval stays fixed @8192; honest steps-vs-coverage test. Watch long bucket.
+[2026-06-10 01:04:55] EXP 0009 overrides={"max_length": 6144}
+[2026-06-10 01:30:00] EXP 0009 KEPT  val_loss=0.71048 (was 0.71926, -0.00878)  steps=78  train_s=1205.8
+[2026-06-10 01:30:01] EXP 0010 START  slug=cosine-cooldown-64  base=best  hyp=Proper LR schedule on the lr2e-4 best: cosine decay over planned 64 steps with 3-step warmup.
+[2026-06-10 01:30:01] EXP 0010 overrides={"lr_scheduler_type": "cosine", "planned_steps": 64, "warmup_steps": 3}

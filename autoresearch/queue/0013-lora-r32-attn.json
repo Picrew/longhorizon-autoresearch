@@ -1,0 +1,9 @@
+{
+  "slug": "lora-r32-attn",
+  "hypothesis": "Memory-safe capacity test (0007 OOM'd with MLP): LoRA r16->r32 alpha64, attn-only.",
+  "base": "best",
+  "overrides": {
+    "lora_r": 32,
+    "lora_alpha": 64
+  }
+}

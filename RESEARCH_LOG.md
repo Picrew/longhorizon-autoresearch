@@ -117,4 +117,26 @@ beat full per-trace context?). Watch the long_horizon bucket specifically.
 A real LR schedule: warm up briefly then decay over the run. Standard cooldown often
 buys a little once the LR magnitude is right.
 
+### exp 0008 & 0009 results — both kept; throughput is real
+- **0008** (lr 3e-4): **0.71926**, kept (−0.014). LR still climbing (long 0.732, med 0.691,
+  short 0.837). Peak not yet found → try 4e-4.
+- **0009** (train ctx 8192→6144): **0.71048**, kept (−0.009), and ran **78 steps** vs 65.
+  Crucially the long bucket *improved* (0.7324→0.7248) even though it's evaluated at the
+  fixed 8192. **More steps beat more per-trace coverage** here — and it did NOT hurt
+  long-horizon, so this isn't the "short seqs are useless" failure mode; it's honest
+  throughput. → push ctx lower (5120) and watch where the long bucket turns.
+- 0010 (cosine cooldown) was still running at this check-in; result next time.
+- Stacked best = ...assistant + lr3e-4 + ctx6144 = 0.710. Curve: 0.808→0.769→0.733→0.719→0.710.
+
+### exp 0011 — lr 3e-4 → 4e-4
+Keep climbing the LR ridge until it regresses (then we've bracketed the peak).
+
+### exp 0012 — train ctx 6144 → 5120 (more throughput)
+Push the steps-vs-coverage trade further. Watch long_horizon: if it finally regresses,
+we've found the coverage floor for long traces; if not, steps keep winning.
+
+### exp 0013 — LoRA r16 → r32 (attn-only, memory-safe)
+Re-ask the capacity question 0007 couldn't (it OOM'd with MLP targets at 8192). r32
+attn-only is cheap; tests whether more rank helps now that LR/steps are tuned.
+
 <!-- next entries appended at each steering check-in -->

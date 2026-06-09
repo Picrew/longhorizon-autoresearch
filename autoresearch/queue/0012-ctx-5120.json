@@ -1,0 +1,8 @@
+{
+  "slug": "ctx-5120",
+  "hypothesis": "More throughput: train ctx ->5120 for more steps. Watch long bucket for the coverage floor.",
+  "base": "best",
+  "overrides": {
+    "max_length": 5120
+  }
+}

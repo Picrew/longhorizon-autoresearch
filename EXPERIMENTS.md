@@ -20,5 +20,7 @@ decision-loss curve).
 | 0005 | late-token-weight-2 | Quality decay / goal drift happen late in a trajectory. Upweight later-in-context decis... | 0.77317 | decision_loss |  | 64 | 1215.5 |
 | 0006 | lr-2e-4 | Two long-horizon levers failed -> likely undertraining in the 64-step budget. Test lear... | 0.73336 | decision_loss | ✅ | 65 | 1217.6 |
 | 0007 | lora-r32-all-linear | Test if capacity is the bottleneck: LoRA r16 attn-only -> r32 alpha64 with MLP targets ... | failed | full_seq |  |  |  |
+| 0008 | lr-3e-4 | Continue LR search: 2e-4 -> 3e-4 (undertraining confirmed by 0006). | 0.71926 | decision_loss | ✅ | 65 | 1217.4 |
+| 0009 | ctx-6144-throughput | Throughput: train ctx 8192->6144 to fit more optimizer steps in the fixed budget. Eval ... | 0.71048 | decision_loss | ✅ | 78 | 1205.8 |
 
-_7 experiments logged; 5 on the decision-loss curve, 3 kept improvements._
+_9 experiments logged; 7 on the decision-loss curve, 5 kept improvements._
