@@ -354,4 +354,12 @@ scaling result — fixed (timeout 9000). On the re-run:
   caveat: the held-out proxy has no SPT spans, so its benefit here may be modest even if it
   improves real goal-tracking.
 
+### Step-change CONFIRMED (2-seed)
+- **0038** (0037 config, seed 43): **0.64813** vs 0037's 0.65118 (seed 42) — spread 0.003,
+  within noise, and both far below the pre-step 0.6657. **The data+compute step-change to
+  ~0.650 is real and seed-robust.** (Loop kept 0037 as best: 0038's edge < 0.004 margin.)
+  Per bucket both seeds agree (long ~0.658, med ~0.624, short ~0.73).
+- 0039 (train5400) / 0040 (SPT) still running. Next compute step queued adaptively once 0039
+  shows whether scaling continues past 258 steps (1 epoch ≈ 1141 steps, so likely headroom).
+
 <!-- next entries appended at each steering check-in -->
