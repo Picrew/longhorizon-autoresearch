@@ -1,0 +1,8 @@
+{
+  "slug": "train-1260",
+  "hypothesis": "Use more of the 30-min budget: train_seconds 1020->1260 (eval is only ~7min). Undertrained model should drop above the ~0.001 noise floor.",
+  "base": "best",
+  "overrides": {
+    "train_seconds": 1260
+  }
+}

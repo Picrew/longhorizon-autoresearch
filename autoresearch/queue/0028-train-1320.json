@@ -1,0 +1,8 @@
+{
+  "slug": "train-1320",
+  "hypothesis": "Push training to the full budget: train_seconds 1320 (total ~30min).",
+  "base": "best",
+  "overrides": {
+    "train_seconds": 1320
+  }
+}

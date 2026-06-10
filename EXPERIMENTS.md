@@ -36,5 +36,7 @@ decision-loss curve).
 | 0021 | truncation-head-tail | Keep goal+recent context, drop the middle (head_tail) -- trains on both the goal setup ... | 0.67423 | decision_loss_v2 | ✅ | 76 | 1021.4 |
 | 0022 | late-weight-v2 | Re-test late-token loss weighting (1->2 ramp) under v2: upweighting late decisions shou... | 0.67784 | decision_loss_v2 |  | 75 | 1020.4 |
 | 0023 | ctx-8192-v2 | Re-test long context under v2: train ctx ->8192 (more context coverage, fewer steps). D... | 0.67568 | decision_loss_v2 |  | 55 | 1037.6 |
+| 0024 | ctx-6144-v2 | Intermediate context under v2: ctx ->6144 to bracket the v2-optimal training context (5... | 0.67488 | decision_loss_v2 |  | 66 | 1028.4 |
+| 0025 | headtail-ctx6144 | head_tail wins + long traces want more context: test head_tail at ctx 6144 (vs 5120). C... | 0.67590 | decision_loss_v2 |  | 66 | 1027.5 |
 
-_23 experiments logged; 16 on the v1 (head@8192) curve, 5 on the v2 (long-horizon, to 16384) curve, 13 kept improvements total._
+_25 experiments logged; 16 on the v1 (head@8192) curve, 7 on the v2 (long-horizon, to 16384) curve, 13 kept improvements total._

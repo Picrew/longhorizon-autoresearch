@@ -249,4 +249,21 @@ Since long traces like more context and head_tail is the winner, test head_tail 
 (0025) and 7168 (0026) vs 5120: does giving head_tail more coverage capture the long-bucket
 gain without losing too many steps?
 
+### NOISE FLOOR discovered + context bracket closed
+- **0024** and **0025** turned out to be the *same* effective config (head_tail + ctx6144,
+  both base=best) yet scored **0.67488 vs 0.6759** — a 0.001 gap. So the **v2 metric has
+  ~0.001 run-to-run noise** (NEFTune embedding noise + CUDA nondeterminism). Implication:
+  treat deltas < ~0.0015 as noise. head_tail's −0.0033 is real (~3×); tail's −0.0015 is
+  borderline.
+- head_tail context: 5120 stays best; 6144 (0024/0025) and (0026 pending) are within noise.
+  **Context bracket closed at 5120.**
+- **Strategic correction:** I conservatively set train_seconds=1020 (≈24 min total) but the
+  budget is 30 min and v2 eval is only ~7 min — I've been leaving ~6 min of training unused
+  every run, and the model is undertrained (76 steps). The biggest remaining *real* lever is
+  to USE THE FULL BUDGET for training.
+
+### exp 0027 / 0028 — use the full 30-min budget for training
+0027 train_seconds=1260, 0028 train_seconds=1320 (total ≈29–30 min). More steps on an
+undertrained model should give an above-noise drop across all buckets.
+
 <!-- next entries appended at each steering check-in -->
