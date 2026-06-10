@@ -297,4 +297,27 @@ The recipe has converged; remaining deltas are noise-bound. Final experiments:
   removing it change anything? If not, simplify the final recipe.
 Then finalize: annotated plot + README two-phase story + final recipe.
 
+### ⚠ NOISE IS ~0.004, NOT ~0.001 — and a strategic pivot (user-directed)
+- **0031** (ctx8192 full-budget): 0.67169, discard — ctx5120 stays optimal even with more budget.
+- **0032** (BEST config, seed 43): **0.67004 vs the seed-42 best 0.66566 — a 0.0044 gap on an
+  IDENTICAL config.** So the true run-to-run noise is **~0.004** (the 0024/0025 near-tie was
+  luck). Implication: **most v2 "improvements" (tail −0.0015, head_tail −0.0033) were within
+  noise.** Only assistant-masking (−0.039) and the LR/throughput/**full-budget-training**
+  cluster are robustly real. Incremental knob-tweaking was chasing noise.
+
+**PIVOT (Phase 3, experiments → 80):** bigger levers, rigorous (multi-seed) evaluation, and a
+sharp focus on *long-agent training*. The glaring underused lever: the model trains on only
+**2,730 examples (~1,045 long)** out of a 147K+ corpus — undertrained AND data-starved.
+- **Data scale-up:** build a large, long-heavy slice (16k, 60% long; eval still on the fixed
+  pilot val, leakage-filtered) and train much longer (the full-budget win says more training
+  helps; more data lets it keep helping without overfitting).
+- **Rigor:** loop now has a `--keep-margin` noise guard; key claims get a 2-seed re-run.
+- **Then the long-agent METHOD work:** SPT self-prediction auxiliary (the project's thesis),
+  decision-point upweighting, goal re-anchoring — built and tested at scale, not at the floor.
+Goal: a step-change, not 0.001 drift.
+
+### exp 0035+ — Phase 3 data-scale-up (long-heavy)
+First step-change attempt: train on the 16k long-heavy slice for a larger budget vs the
+2,730-example best. Expect a real (>noise) drop, concentrated in the long bucket.
+
 <!-- next entries appended at each steering check-in -->

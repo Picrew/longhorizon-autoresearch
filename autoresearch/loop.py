@@ -168,11 +168,14 @@ def run_one(spec_path: Path, exp_id: str, state: dict, args) -> None:
 
     wall = round(time.time() - t0, 1)
 
+    # Rigor: only update the running best on a gain that clears the noise margin
+    # (measured seed-to-seed spread is ~0.004, so sub-margin "wins" are noise).
+    margin = float(getattr(args, "keep_margin", 0.0) or 0.0)
     kept = False
     if metric is not None:
         if is_baseline:
             kept = True
-        elif state["best_metric"] is None or metric < state["best_metric"]:
+        elif state["best_metric"] is None or metric < state["best_metric"] - margin:
             kept = True
 
     if kept:
@@ -219,7 +222,9 @@ def main() -> None:
     p = argparse.ArgumentParser()
     p.add_argument("--data-root", default=".")
     p.add_argument("--model", default="models/Qwen3-4B-Instruct-2507")
-    p.add_argument("--max-experiments", type=int, default=40)
+    p.add_argument("--max-experiments", type=int, default=80)
+    p.add_argument("--keep-margin", type=float, default=0.0,
+                   help="only update running-best if metric improves by more than this (noise guard)")
     p.add_argument("--per-exp-timeout", type=int, default=2400, help="hard kill a single exp after N s")
     p.add_argument("--poll-seconds", type=int, default=30, help="when queue empty, wait then recheck")
     p.add_argument("--idle-exit-minutes", type=int, default=180, help="exit if queue stays empty this long")

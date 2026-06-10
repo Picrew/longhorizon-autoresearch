@@ -47,8 +47,29 @@ changes are judged against that fixed yardstick.
   (goal recall / trajectory forecast / "should I stop?") whose labels come from the
   trace's own future. The project's flagship idea; highest-novelty, build last.
 
+## Phase 3+ bold directions (long-agent step-change, experiments → 80)
+After discovering the metric noise is ~0.004 (so sub-0.005 single-run deltas are unreliable),
+the search shifted to **big levers + rigour**, focused on *training to improve long agents*:
+
+- **Data scale-up (long-heavy):** the model was trained on only 2,730 examples / ~1,045 long.
+  Train on a 16k+ slice weighted 60% long (`big_long_v1`), eval on the fixed pilot val
+  (leakage-filtered). More long agentic data on an undertrained model is the most reliable
+  step-change.
+- **Train to convergence:** the full-budget win showed undertraining; with more data, push
+  train_seconds far higher (longer flagship runs are OK now) and watch the scaling curve.
+- **SPT self-prediction auxiliary (the project's thesis):** at checkpoints in long traces,
+  add self-prediction targets whose labels are the trace's own future — goal recall,
+  trajectory-position/“will this succeed”, quality self-rating. L = L_task + λ·L_selfpred.
+  The on-thesis long-horizon method; build incrementally.
+- **Decision-point upweighting / goal re-anchoring:** test at scale, not at the noise floor.
+- **Efficiency for more effective training:** sequence packing + flash-attention to fit more
+  real tokens per unit time (longer effective training within a budget).
+- **Higher-capacity PEFT:** rsLoRA / DoRA / higher rank, now that data isn't the bottleneck.
+
 ## Rules
 1. Prefer a **method change** over a hyperparameter tweak when both are plausible.
 2. One change per experiment, so attribution is clean (karpathy discipline).
 3. Every experiment records *why it was chosen given prior results* in RESEARCH_LOG.md.
-4. Keep only if it beats the running-best decision loss; otherwise discard and learn.
+4. Keep only if it beats the running-best decision loss **by more than the noise margin
+   (~0.004)**; for important claims, confirm with a 2-seed re-run.
+5. Chase **step-changes**, not noise-level drift.
