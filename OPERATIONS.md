@@ -28,6 +28,9 @@ ssh -p 6000 ljj@124.220.35.225 "cat $SRV/method.md" > method.md
 scp -P 6000 ljj@124.220.35.225:$SRV/progress.png ./progress.png
 ```
 ALWAYS verify `wc -l experiments/ledger.jsonl` matches the server before committing.
+**Pull to a TEMP file first** (`ssh ... "cat $f" > /tmp/x && [ -s /tmp/x ] && mv /tmp/x dest`):
+a bare `ssh "cat f" > dest` **truncates dest to empty if the ssh drops** (the box's ssh
+is intermittently flaky). If you do clobber a tracked file, `git checkout -- <file>` restores it.
 
 ## Pull results back & publish (each wake-up)
 ```bash
