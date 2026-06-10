@@ -68,6 +68,12 @@ DEFAULTS: dict = {
     "max_length": 8192,        # TRAIN sequence cap (a method knob; eval is fixed)
     "pos_weight_end": None,    # late-token loss weighting: linear ramp 1.0 -> this over the seq (None = uniform)
     "oversample": None,        # {"long_horizon": 2, ...} duplicate examples of a length bucket N times
+    # SPT self-prediction auxiliary (the project thesis): train the model to recall
+    # its own goal from deep context. Appends a supervised "[Self-check] restate the
+    # goal" QA at the end of a trace so the model must hold the objective across the
+    # whole trajectory (goal stability). Eval is unchanged (no SPT spans in val).
+    "spt_goal_recall": False,
+    "spt_min_tokens": 4000,    # only augment traces at least this long (chars) -- long-horizon only
     # --- lora ---
     "lora_r": 16,
     "lora_alpha": 32,
@@ -124,6 +130,28 @@ def label_token_ids(text: str, tokenizer, *, loss_on: str):
     roles_per_tok = [role_at(starts, roles, a) for (a, _b) in offsets]
     labels = [tid if (r in keep) else -100 for tid, r in zip(ids, roles_per_tok)]
     return ids, labels, roles_per_tok
+
+
+_GOAL_RE = re.compile(r"<\|user\|>\n(.*?)(?=\n<\||\Z)", re.S)
+
+
+def augment_spt_goal_recall(text: str, min_tokens: int) -> str:
+    """SPT goal-recall: append a supervised '[Self-check] restate the goal' turn so
+    the model is trained to hold the original objective across a long trajectory.
+    Only applied to long traces; the answer (the goal) becomes a supervised
+    <|assistant|> span under loss_on=assistant. No-op if no goal can be parsed."""
+    if len(text) < min_tokens:
+        return text
+    m = _GOAL_RE.search(text)
+    if not m:
+        return text
+    goal = " ".join(m.group(1).strip().split())[:500]
+    if not goal:
+        return text
+    return text.rstrip("\n") + (
+        "\n<|user|>\n[Self-check] Restate the original goal of this task in one sentence."
+        f"\n<|assistant|>\n{goal}\n"
+    )
 
 
 def apply_truncation(ids, labels, max_length: int, strategy: str, eos_id):
@@ -329,9 +357,12 @@ def main() -> None:
     loss_on = cfg["loss_on"]
     truncation = cfg["truncation"]
     max_length = int(cfg["max_length"])
+    spt_goal = bool(cfg.get("spt_goal_recall"))
+    spt_min = int(cfg.get("spt_min_tokens", 4000) or 4000)
 
     def encode(row):
-        ids, labels, _roles = label_token_ids(row["text"], tokenizer, loss_on=loss_on)
+        text = augment_spt_goal_recall(row["text"], spt_min) if spt_goal else row["text"]
+        ids, labels, _roles = label_token_ids(text, tokenizer, loss_on=loss_on)
         ids, labels = apply_truncation(ids, labels, max_length, truncation, eos_id)
         # guard: a sequence with no supervised tokens would give nan loss
         if all(x == -100 for x in labels):
