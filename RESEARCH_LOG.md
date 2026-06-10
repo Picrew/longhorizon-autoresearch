@@ -332,4 +332,26 @@ First step-change attempt: train on the 16k long-heavy slice for a larger budget
   or a different objective. The SPT auxiliary changes *what* is learned (self-modelling), so it's
   the right long-agent bet next even if its effect on this proxy is modest.
 
+### ★ STEP-CHANGE: data + compute together (0037)
+The earlier 0036/0037 "failures" were a per-exp-timeout bug (2400 < train_seconds), not a
+scaling result — fixed (timeout 9000). On the re-run:
+- **0037** (9.1k long-heavy data @ train 3600s, **258 steps**): **0.65118, KEPT (−0.0145 vs
+  0.6657 — 3.6× the ~0.004 noise).** Dropped EVERY bucket: long 0.6712→**0.6603**, medium
+  0.6434→**0.6249**, short 0.7678→**0.7375**.
+- Contrast 0035 (same big data, only 91 steps @1260): 0.6688, a wash. So **data alone or
+  compute alone plateau; data+compute TOGETHER is the step-change** — the model was both
+  data- and compute-limited (95 steps on 2.7k saturated; 258 steps on 9.1k did not).
+- New best track = big-data @ longer training. There is headroom (258 steps ≈ 23% of one
+  epoch on 9.1k), so push compute further.
+
+### SPT auxiliary smoke-tested OK
+`spt_goal_recall=true` runs end-to-end on big-data (no OOM, sane train loss). Ready to test.
+
+### exp 0038/0039/0040 — confirm, push, and the method
+- **0038** seed 43: 2-seed confirm the 0037 step-change is real, not a lucky seed.
+- **0039** train 5400 (~390 steps): does compute keep scaling toward 1 epoch?
+- **0040** SPT goal-recall on the big-data best: the thesis method (goal stability). Honest
+  caveat: the held-out proxy has no SPT spans, so its benefit here may be modest even if it
+  improves real goal-tracking.
+
 <!-- next entries appended at each steering check-in -->

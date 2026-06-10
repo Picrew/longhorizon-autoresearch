@@ -1,0 +1,8 @@
+{
+  "slug": "bigdata-t5400",
+  "hypothesis": "Push compute scaling further: train_seconds 5400 (~390 steps, ~40% of an epoch on the 9.1k set). Does decision loss keep dropping?",
+  "base": "best",
+  "overrides": {
+    "train_seconds": 5400
+  }
+}

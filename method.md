@@ -1,12 +1,12 @@
 # Current best method
 
-- best experiment: **0027**
-- held-out val loss (lower=better): **0.66566**
+- best experiment: **0037**
+- held-out val loss (lower=better): **0.65118**
 
 ## Config
 ```json
 {
-  "train_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/train.sft.jsonl",
+  "train_file": "data/agentic_experiments/big_long_v1/train.noleak.sft.jsonl",
   "val_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/val.sft.jsonl",
   "loss_on": "assistant",
   "truncation": "head_tail",
@@ -30,9 +30,9 @@
   "batch_size": 1,
   "grad_accum": 8,
   "max_grad_norm": 1.0,
-  "neftune_noise_alpha": 5.0,
+  "neftune_noise_alpha": null,
   "attn_implementation": "sdpa",
-  "train_seconds": 1260,
+  "train_seconds": 3600,
   "max_steps_cap": 100000,
   "seed": 42,
   "eval_limit": 0
@@ -56,3 +56,4 @@
 - `0020` truncation-tail: Now that eval sees beyond 8192: train on the END of long traces (truncation=tail keeps the trajectory's late decisions). Previously unmeasurable under head@8192 eval. -> loss 0.67753
 - `0021` truncation-head-tail: Keep goal+recent context, drop the middle (head_tail) -- trains on both the goal setup and the late payoff of long traces. -> loss 0.67423
 - `0027` train-1260: Use more of the 30-min budget: train_seconds 1020->1260 (eval is only ~7min). Undertrained model should drop above the ~0.001 noise floor. -> loss 0.66566
+- `0037` bigdata-t3600: Flagship scale run: big data + train_seconds 3600 (~1hr, ~270 steps). Find the data+compute scaling drop, esp long bucket. -> loss 0.65118

@@ -48,5 +48,7 @@ decision-loss curve).
 | 0033 | neftune-10 | Cheap genuine test: more embedding noise, NEFTune alpha 5->10. | 0.66716 | decision_loss_v2 |  | 95 | 1271.3 |
 | 0034 | neftune-off | Ablation: 0018's NEFTune win (-0.0014) was noise-level. Remove it -- if the loss is unc... | 0.66618 | decision_loss_v2 |  | 95 | 1271.8 |
 | 0035 | bigdata-t1260 | SCALE-UP: train on the 9.1k long-heavy slice (4.7k long, vs pilot 2730/1045) at train_s... | 0.66878 | decision_loss_v2 |  | 91 | 1267.6 |
+| 0036 | bigdata-t2400 | Scale compute on big data: train_seconds 2400 (~40min). More steps to actually traverse... | timeout | full_seq |  |  |  |
+| 0037 | bigdata-t3600 | Flagship scale run: big data + train_seconds 3600 (~1hr, ~270 steps). Find the data+com... | 0.65118 | decision_loss_v2 | ✅ | 258 | 3600.4 |
 
-_35 experiments logged; 16 on the v1 (head@8192) curve, 17 on the v2 (long-horizon, to 16384) curve, 14 kept improvements total._
+_37 experiments logged; 16 on the v1 (head@8192) curve, 18 on the v2 (long-horizon, to 16384) curve, 15 kept improvements total._

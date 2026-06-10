@@ -1,0 +1,8 @@
+{
+  "slug": "bigdata-seed43",
+  "hypothesis": "2-seed confirm of the 0037 step-change (big-data@3600=0.6512, -0.0145): same config, seed 43. Need it >noise to claim the step-change is real.",
+  "base": "best",
+  "overrides": {
+    "seed": 43
+  }
+}

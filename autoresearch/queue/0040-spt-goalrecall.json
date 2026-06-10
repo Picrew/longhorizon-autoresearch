@@ -1,0 +1,8 @@
+{
+  "slug": "spt-goalrecall",
+  "hypothesis": "SPT self-prediction (thesis method): spt_goal_recall=true on the big-data best -- train the model to restate its goal deep in long traces (goal stability). Proxy benefit may be modest (val has no SPT spans); document honestly.",
+  "base": "best",
+  "overrides": {
+    "spt_goal_recall": true
+  }
+}
