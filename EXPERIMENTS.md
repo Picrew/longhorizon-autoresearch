@@ -54,5 +54,6 @@ decision-loss curve).
 | 0039 | bigdata-t5400 | Push compute scaling further: train_seconds 5400 (~390 steps, ~40% of an epoch on the 9... | 0.64014 | decision_loss_v2 | ✅ | 388 | 5406.0 |
 | 0040 | spt-goalrecall | SPT self-prediction (thesis method): spt_goal_recall=true on the big-data best -- train... | 0.64277 | decision_loss_v2 |  | 385 | 5405.7 |
 | 0041 | bigdata-t7200 | Push compute frontier: train_seconds 7200 (~520 steps, ~46% epoch). Scaling not plateau... | 0.64312 | decision_loss_v2 |  | 516 | 7213.4 |
+| 0042 | bigdata-t7200-s43 | 2-seed confirm of the train7200 frontier (seed 43). Keeps GPU busy within the 9000s tim... | 0.63921 | decision_loss_v2 |  | 518 | 7211.0 |
 
-_41 experiments logged; 16 on the v1 (head@8192) curve, 22 on the v2 (long-horizon, to 16384) curve, 16 kept improvements total._
+_42 experiments logged; 16 on the v1 (head@8192) curve, 23 on the v2 (long-horizon, to 16384) curve, 16 kept improvements total._

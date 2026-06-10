@@ -403,4 +403,12 @@ lowers loss AND lets compute scale past 388 steps, capacity was the bottleneck; 
 we're at the QLoRA/proxy ceiling (~0.640) and the data+compute step-change (0.6657→0.6401) is
 the headline result -> finalize. (Watch for OOM at r128/ctx5120; discard if so.)
 
+### Compute plateau 2-seed CONFIRMED (0042)
+- **0042** (train7200 seed43): **0.63921** — lowest single number but only 0.0009 under 0039
+  (within margin, not promoted). train7200 = {seed42 0.6431, seed43 0.6392}, avg ~0.641 ≈
+  train5400's 0.6401. **Compute is plateaued at ~388 steps / ~0.640 (2-seed confirmed)**;
+  the 0.0039 seed spread re-confirms ~0.004 noise.
+- 0043 (r128@train5400) running = the capacity verdict. If it ties ~0.640, that's the
+  QLoRA/proxy ceiling and we finalize on the data+compute step-change (0.6657->0.6401).
+
 <!-- next entries appended at each steering check-in -->
