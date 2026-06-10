@@ -43,5 +43,8 @@ decision-loss curve).
 | 0028 | train-1320 | Push training to the full budget: train_seconds 1320 (total ~30min). | 0.66626 | decision_loss_v2 |  | 99 | 1323.5 |
 | 0029 | cosine-95 | Cosine decay done right at full budget: planned_steps=95 (matches the ~95-step run), wa... | 0.67553 | decision_loss_v2 |  | 95 | 1270.8 |
 | 0030 | lora-r96 | More capacity now that training is longer: r64->r96, alpha->192. | 0.66628 | decision_loss_v2 |  | 94 | 1266.4 |
+| 0031 | ctx8192-fullbudget | Re-test ctx8192 at train1260 (~63 steps vs 55 before): does the long bucket's appetite ... | 0.67169 | decision_loss_v2 |  | 67 | 1263.2 |
+| 0032 | best-seed43 | Robustness/noise re-run of the BEST config with seed 43 (quantify the ~0.001 noise on t... | 0.67004 | decision_loss_v2 |  | 95 | 1268.9 |
+| 0033 | neftune-10 | Cheap genuine test: more embedding noise, NEFTune alpha 5->10. | 0.66716 | decision_loss_v2 |  | 95 | 1271.3 |
 
-_30 experiments logged; 16 on the v1 (head@8192) curve, 12 on the v2 (long-horizon, to 16384) curve, 14 kept improvements total._
+_33 experiments logged; 16 on the v1 (head@8192) curve, 15 on the v2 (long-horizon, to 16384) curve, 14 kept improvements total._

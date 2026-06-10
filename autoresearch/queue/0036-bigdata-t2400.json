@@ -1,0 +1,10 @@
+{
+  "slug": "bigdata-t2400",
+  "hypothesis": "Scale compute on big data: train_seconds 2400 (~40min). More steps to actually traverse the larger long-heavy set.",
+  "base": "best",
+  "overrides": {
+    "train_file": "data/agentic_experiments/big_long_v1/train.noleak.sft.jsonl",
+    "train_seconds": 2400,
+    "neftune_noise_alpha": null
+  }
+}

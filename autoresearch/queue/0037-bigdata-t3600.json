@@ -1,0 +1,10 @@
+{
+  "slug": "bigdata-t3600",
+  "hypothesis": "Flagship scale run: big data + train_seconds 3600 (~1hr, ~270 steps). Find the data+compute scaling drop, esp long bucket.",
+  "base": "best",
+  "overrides": {
+    "train_file": "data/agentic_experiments/big_long_v1/train.noleak.sft.jsonl",
+    "train_seconds": 3600,
+    "neftune_noise_alpha": null
+  }
+}
