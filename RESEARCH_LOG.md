@@ -320,4 +320,16 @@ Goal: a step-change, not 0.001 drift.
 First step-change attempt: train on the 16k long-heavy slice for a larger budget vs the
 2,730-example best. Expect a real (>noise) drop, concentrated in the long bucket.
 
+### Phase 3 first signals — neftune inert; data needs compute
+- **0034** (NEFTune off): 0.66618 ≈ best (+0.0005) → **NEFTune is inert**; dropped from the
+  recipe going forward (also removes a noise source).
+- **0035** (big data @ same compute 1260s): 0.66878, a tie within noise (+0.0031). More long
+  data at a FIXED 91-step budget doesn't help — you just see a smaller fraction of it (and the
+  long-heavy mix slightly starves short/medium). **Data alone is not the lever; data+compute is.**
+- 0036 (@2400) / 0037 (@3600) running — the real scaling test (more steps to traverse the 9.1k set).
+- Caution forming: the decision-loss metric may be near its QLoRA ceiling (~0.66, ppl ~1.94);
+  if compute-scaling also ties, the next step-change needs capacity (full-FT infeasible on 24GB)
+  or a different objective. The SPT auxiliary changes *what* is learned (self-modelling), so it's
+  the right long-agent bet next even if its effect on this proxy is modest.
+
 <!-- next entries appended at each steering check-in -->
