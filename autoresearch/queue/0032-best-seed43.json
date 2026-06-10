@@ -1,0 +1,8 @@
+{
+  "slug": "best-seed43",
+  "hypothesis": "Robustness/noise re-run of the BEST config with seed 43 (quantify the ~0.001 noise on the winning recipe).",
+  "base": "best",
+  "overrides": {
+    "seed": 43
+  }
+}

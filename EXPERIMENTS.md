@@ -41,5 +41,7 @@ decision-loss curve).
 | 0026 | headtail-ctx7168 | head_tail at ctx 7168 -- more coverage still. Brackets head_tail's optimal training con... | 0.67839 | decision_loss_v2 |  | 59 | 1022.6 |
 | 0027 | train-1260 | Use more of the 30-min budget: train_seconds 1020->1260 (eval is only ~7min). Undertrai... | 0.66566 | decision_loss_v2 | ✅ | 95 | 1270.8 |
 | 0028 | train-1320 | Push training to the full budget: train_seconds 1320 (total ~30min). | 0.66626 | decision_loss_v2 |  | 99 | 1323.5 |
+| 0029 | cosine-95 | Cosine decay done right at full budget: planned_steps=95 (matches the ~95-step run), wa... | 0.67553 | decision_loss_v2 |  | 95 | 1270.8 |
+| 0030 | lora-r96 | More capacity now that training is longer: r64->r96, alpha->192. | 0.66628 | decision_loss_v2 |  | 94 | 1266.4 |
 
-_28 experiments logged; 16 on the v1 (head@8192) curve, 10 on the v2 (long-horizon, to 16384) curve, 14 kept improvements total._
+_30 experiments logged; 16 on the v1 (head@8192) curve, 12 on the v2 (long-horizon, to 16384) curve, 14 kept improvements total._

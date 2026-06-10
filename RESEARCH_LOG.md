@@ -282,4 +282,19 @@ at train1260 it gets ~63 steps (vs 55 before), so the "long traces want context 
 steps" tradeoff may now tip in favour of more context. (Reweighting levers deferred —
 late-weight failed twice and gains are near the ~0.001 noise floor.)
 
+### exp 0029/0030 — search converging
+- **0029** (cosine, done right at planned_steps=95): **0.6755**, discard (+0.01 worse). LR decay
+  starves an already-undertrained 95-step run; constant high LR is correct. **Cosine rejected**
+  (twice, both flawed-and-clean).
+- **0030** (r96): 0.6663, discard (noise). **Capacity saturated at r64.**
+- 0031 (ctx8192 @ full budget) pending. Best stable at 0027 = **0.6657**.
+
+### Endgame — quantify, ablate, finalize
+The recipe has converged; remaining deltas are noise-bound. Final experiments:
+- **0032** best + seed 43: a robustness/noise re-run of the BEST config specifically.
+- **0033** NEFTune α 5→10: cheap genuine test of more embedding noise.
+- **0034** NEFTune OFF (ablation): 0018's neftune win (−0.0014) was itself noise-level — does
+  removing it change anything? If not, simplify the final recipe.
+Then finalize: annotated plot + README two-phase story + final recipe.
+
 <!-- next entries appended at each steering check-in -->

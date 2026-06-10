@@ -1,0 +1,8 @@
+{
+  "slug": "neftune-10",
+  "hypothesis": "Cheap genuine test: more embedding noise, NEFTune alpha 5->10.",
+  "base": "best",
+  "overrides": {
+    "neftune_noise_alpha": 10.0
+  }
+}

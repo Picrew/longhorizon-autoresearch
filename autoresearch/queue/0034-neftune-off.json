@@ -1,0 +1,8 @@
+{
+  "slug": "neftune-off",
+  "hypothesis": "Ablation: 0018's NEFTune win (-0.0014) was noise-level. Remove it -- if the loss is unchanged, drop it from the final recipe.",
+  "base": "best",
+  "overrides": {
+    "neftune_noise_alpha": null
+  }
+}
