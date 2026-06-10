@@ -362,4 +362,14 @@ scaling result — fixed (timeout 9000). On the re-run:
 - 0039 (train5400) / 0040 (SPT) still running. Next compute step queued adaptively once 0039
   shows whether scaling continues past 258 steps (1 epoch ≈ 1141 steps, so likely headroom).
 
+### Compute keeps scaling (0039) — clean log-linear-ish curve
+- **0039** (train 5400, **388 steps**): **0.64014, kept (−0.0110)**. Long bucket led again
+  (0.6603→**0.6495**). Scaling curve: 95→0.6657, 258→0.6512, 388→0.6401 — **not plateaued**
+  (388 steps ≈ 34% of one epoch on the 9.1k set). Phase-3 cumulative: 0.6657→0.6401 (−0.026).
+- → keep pushing compute: 0041 train7200 (~520 steps). Data isn't the limiter yet (<1 epoch);
+  if compute approaches an epoch and still drops, rebuild a bigger long-heavy set.
+
+### exp 0041 — train 7200 (~520 steps, push the compute frontier)
+2-seed-confirm the frontier-best once compute finally plateaus.
+
 <!-- next entries appended at each steering check-in -->

@@ -51,5 +51,6 @@ decision-loss curve).
 | 0036 | bigdata-t2400 | Scale compute on big data: train_seconds 2400 (~40min). More steps to actually traverse... | timeout | full_seq |  |  |  |
 | 0037 | bigdata-t3600 | Flagship scale run: big data + train_seconds 3600 (~1hr, ~270 steps). Find the data+com... | 0.65118 | decision_loss_v2 | ✅ | 258 | 3600.4 |
 | 0038 | bigdata-seed43 | 2-seed confirm of the 0037 step-change (big-data@3600=0.6512, -0.0145): same config, se... | 0.64813 | decision_loss_v2 |  | 260 | 3609.9 |
+| 0039 | bigdata-t5400 | Push compute scaling further: train_seconds 5400 (~390 steps, ~40% of an epoch on the 9... | 0.64014 | decision_loss_v2 | ✅ | 388 | 5406.0 |
 
-_38 experiments logged; 16 on the v1 (head@8192) curve, 19 on the v2 (long-horizon, to 16384) curve, 15 kept improvements total._
+_39 experiments logged; 16 on the v1 (head@8192) curve, 20 on the v2 (long-horizon, to 16384) curve, 16 kept improvements total._

@@ -1,0 +1,8 @@
+{
+  "slug": "bigdata-t7200",
+  "hypothesis": "Push compute frontier: train_seconds 7200 (~520 steps, ~46% epoch). Scaling not plateaued (95->258->388 steps kept dropping ~0.011). Wall ~7600s < 9000 timeout.",
+  "base": "best",
+  "overrides": {
+    "train_seconds": 7200
+  }
+}

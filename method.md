@@ -1,7 +1,7 @@
 # Current best method
 
-- best experiment: **0037**
-- held-out val loss (lower=better): **0.65118**
+- best experiment: **0039**
+- held-out val loss (lower=better): **0.64014**
 
 ## Config
 ```json
@@ -32,7 +32,7 @@
   "max_grad_norm": 1.0,
   "neftune_noise_alpha": null,
   "attn_implementation": "sdpa",
-  "train_seconds": 3600,
+  "train_seconds": 5400,
   "max_steps_cap": 100000,
   "seed": 42,
   "eval_limit": 0
@@ -57,3 +57,4 @@
 - `0021` truncation-head-tail: Keep goal+recent context, drop the middle (head_tail) -- trains on both the goal setup and the late payoff of long traces. -> loss 0.67423
 - `0027` train-1260: Use more of the 30-min budget: train_seconds 1020->1260 (eval is only ~7min). Undertrained model should drop above the ~0.001 noise floor. -> loss 0.66566
 - `0037` bigdata-t3600: Flagship scale run: big data + train_seconds 3600 (~1hr, ~270 steps). Find the data+compute scaling drop, esp long bucket. -> loss 0.65118
+- `0039` bigdata-t5400: Push compute scaling further: train_seconds 5400 (~390 steps, ~40% of an epoch on the 9.1k set). Does decision loss keep dropping? -> loss 0.64014
