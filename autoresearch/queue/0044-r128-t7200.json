@@ -1,0 +1,10 @@
+{
+  "slug": "r128-t7200",
+  "hypothesis": "Capacity + compute: r128 @ train7200 (516 steps). If r64 plateaued at 388 due to capacity, r128 may keep scaling past it.",
+  "base": "best",
+  "overrides": {
+    "lora_r": 128,
+    "lora_alpha": 256,
+    "train_seconds": 7200
+  }
+}

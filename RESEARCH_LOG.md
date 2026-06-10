@@ -388,4 +388,19 @@ Keeps the GPU busy (within the 9000s timeout) while confirming the frontier poin
 BIGGER compute step (train9000+ toward 1 epoch ~1141 steps) needs a timeout raise + loop
 restart, done at the next idle.
 
+### Compute scaling PLATEAUED at ~388 steps (0041)
+- **0041** (train7200, **516 steps**): **0.64312, discard** (+0.003 vs 0039 0.6401, within noise).
+  Curve: 95→0.6657, 258→0.6512, 388→**0.6401**, 516→0.6431. **Plateau at ~388 steps.**
+- Diagnostic: at 516 steps the LONG bucket *regressed* (0.6495→0.6555) while short improved
+  (0.7258→0.7177) — over-fitting the easy decisions while the hard long ones stop improving.
+  And it plateaued BEFORE 1 epoch (516/1141 = 45%), so the limit is likely **LoRA capacity or
+  the proxy floor**, NOT data quantity (rebuilding bigger data probably won't break it).
+- 0042 (train7200 seed43) confirming the plateau.
+
+### exp 0043/0044 — does more capacity unlock more scaling?
+0043 r64→r128 @ the best compute (train5400); 0044 r128 @ train7200. If higher rank both
+lowers loss AND lets compute scale past 388 steps, capacity was the bottleneck; if r128 ties,
+we're at the QLoRA/proxy ceiling (~0.640) and the data+compute step-change (0.6657→0.6401) is
+the headline result -> finalize. (Watch for OOM at r128/ctx5120; discard if so.)
+
 <!-- next entries appended at each steering check-in -->

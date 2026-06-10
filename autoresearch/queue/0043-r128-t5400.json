@@ -1,0 +1,10 @@
+{
+  "slug": "r128-t5400",
+  "hypothesis": "Capacity break-attempt: r64->r128 (alpha256) at the best compute (train5400/388 steps). Does more rank lower the plateaued loss?",
+  "base": "best",
+  "overrides": {
+    "lora_r": 128,
+    "lora_alpha": 256,
+    "train_seconds": 5400
+  }
+}
