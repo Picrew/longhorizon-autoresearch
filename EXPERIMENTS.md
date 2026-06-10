@@ -38,5 +38,8 @@ decision-loss curve).
 | 0023 | ctx-8192-v2 | Re-test long context under v2: train ctx ->8192 (more context coverage, fewer steps). D... | 0.67568 | decision_loss_v2 |  | 55 | 1037.6 |
 | 0024 | ctx-6144-v2 | Intermediate context under v2: ctx ->6144 to bracket the v2-optimal training context (5... | 0.67488 | decision_loss_v2 |  | 66 | 1028.4 |
 | 0025 | headtail-ctx6144 | head_tail wins + long traces want more context: test head_tail at ctx 6144 (vs 5120). C... | 0.67590 | decision_loss_v2 |  | 66 | 1027.5 |
+| 0026 | headtail-ctx7168 | head_tail at ctx 7168 -- more coverage still. Brackets head_tail's optimal training con... | 0.67839 | decision_loss_v2 |  | 59 | 1022.6 |
+| 0027 | train-1260 | Use more of the 30-min budget: train_seconds 1020->1260 (eval is only ~7min). Undertrai... | 0.66566 | decision_loss_v2 | ✅ | 95 | 1270.8 |
+| 0028 | train-1320 | Push training to the full budget: train_seconds 1320 (total ~30min). | 0.66626 | decision_loss_v2 |  | 99 | 1323.5 |
 
-_25 experiments logged; 16 on the v1 (head@8192) curve, 7 on the v2 (long-horizon, to 16384) curve, 13 kept improvements total._
+_28 experiments logged; 16 on the v1 (head@8192) curve, 10 on the v2 (long-horizon, to 16384) curve, 14 kept improvements total._

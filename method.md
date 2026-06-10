@@ -1,7 +1,7 @@
 # Current best method
 
-- best experiment: **0021**
-- held-out val loss (lower=better): **0.67423**
+- best experiment: **0027**
+- held-out val loss (lower=better): **0.66566**
 
 ## Config
 ```json
@@ -32,7 +32,7 @@
   "max_grad_norm": 1.0,
   "neftune_noise_alpha": 5.0,
   "attn_implementation": "sdpa",
-  "train_seconds": 1020,
+  "train_seconds": 1260,
   "max_steps_cap": 100000,
   "seed": 42,
   "eval_limit": 0
@@ -55,3 +55,4 @@
 - `0019` baseline-v2-longeval: Reanchor on decision_loss_v2 (eval scores decision tokens up to 16384, chunked CE). Re-score the current best recipe (assistant+lr4e-4+ctx5120+r64+neftune5) on the long-horizon-faithful metric; train_seconds 1020 to keep total <=30min with the heavier eval. -> loss 0.67903
 - `0020` truncation-tail: Now that eval sees beyond 8192: train on the END of long traces (truncation=tail keeps the trajectory's late decisions). Previously unmeasurable under head@8192 eval. -> loss 0.67753
 - `0021` truncation-head-tail: Keep goal+recent context, drop the middle (head_tail) -- trains on both the goal setup and the late payoff of long traces. -> loss 0.67423
+- `0027` train-1260: Use more of the 30-min budget: train_seconds 1020->1260 (eval is only ~7min). Undertrained model should drop above the ~0.001 noise floor. -> loss 0.66566

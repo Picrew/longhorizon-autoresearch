@@ -1,0 +1,9 @@
+{
+  "slug": "lora-r96",
+  "hypothesis": "More capacity now that training is longer: r64->r96, alpha->192.",
+  "base": "best",
+  "overrides": {
+    "lora_r": 96,
+    "lora_alpha": 192
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "slug": "cosine-95",
+  "hypothesis": "Cosine decay done right at full budget: planned_steps=95 (matches the ~95-step run), warmup 5. The 0010 cosine test was flawed (planned_steps=64 cut training short).",
+  "base": "best",
+  "overrides": {
+    "lr_scheduler_type": "cosine",
+    "planned_steps": 95,
+    "warmup_steps": 5
+  }
+}

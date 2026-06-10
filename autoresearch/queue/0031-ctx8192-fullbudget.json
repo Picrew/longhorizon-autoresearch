@@ -1,0 +1,8 @@
+{
+  "slug": "ctx8192-fullbudget",
+  "hypothesis": "Re-test ctx8192 at train1260 (~63 steps vs 55 before): does the long bucket's appetite for context now beat the step cost?",
+  "base": "best",
+  "overrides": {
+    "max_length": 8192
+  }
+}

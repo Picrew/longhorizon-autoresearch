@@ -266,4 +266,20 @@ gain without losing too many steps?
 0027 train_seconds=1260, 0028 train_seconds=1320 (total ≈29–30 min). More steps on an
 undertrained model should give an above-noise drop across all buckets.
 
+### exp 0027/0028 — full-budget training is the biggest v2 lever
+- **0027** (train_seconds 1260): **0.66566**, kept (**−0.0086**, 8× noise) — every bucket
+  dropped, long the most (0.6783→0.6712). The model was badly undertrained; using the full
+  30-min budget (95 steps vs 76) is the single largest v2 gain. Wall 28.5 min.
+- **0028** (train 1320): 0.66626, discard — ties 1260 (noise) and pushes wall to 29.4 min.
+  **train_seconds=1260 locked.** 0026 (head_tail ctx7168) discard (noise), confirming ctx5120.
+- v2 curve: 0.679→0.6775(tail)→0.6742(head_tail)→**0.6657**(full-budget). Best = 0027.
+
+### exp 0029/0030/0031 — re-tests at the new full-budget baseline
+The budget change may shift earlier verdicts. 0029: cosine decay done right (planned_steps≈95
+matching the actual run, warmup 5 — the 0010 cosine test was flawed by planned_steps=64).
+0030: r64→r96 capacity (does more rank help with more training?). 0031: **ctx 8192 re-test** —
+at train1260 it gets ~63 steps (vs 55 before), so the "long traces want context but it costs
+steps" tradeoff may now tip in favour of more context. (Reweighting levers deferred —
+late-weight failed twice and gains are near the ~0.001 noise floor.)
+
 <!-- next entries appended at each steering check-in -->
