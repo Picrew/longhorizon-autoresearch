@@ -1,0 +1,9 @@
+{
+  "slug": "bigdata-t7200-s43",
+  "hypothesis": "2-seed confirm of the train7200 frontier (seed 43). Keeps GPU busy within the 9000s timeout; confirms the frontier-best before pushing bigger compute.",
+  "base": "best",
+  "overrides": {
+    "train_seconds": 7200,
+    "seed": 43
+  }
+}

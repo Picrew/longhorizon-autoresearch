@@ -372,4 +372,20 @@ scaling result — fixed (timeout 9000). On the re-run:
 ### exp 0041 — train 7200 (~520 steps, push the compute frontier)
 2-seed-confirm the frontier-best once compute finally plateaus.
 
+### exp 0040 — SPT goal-recall: honest NEGATIVE on the proxy
+- **0040** (big-data + train5400 + spt_goal_recall): **0.64277** vs 0039's 0.64014 (same
+  compute, no SPT) — +0.0026, within noise but trending worse on every bucket. SPT goal-recall
+  does NOT help held-out decision loss. *Why:* (1) the val set has no self-check spans, so the
+  metric can't reward improved goal-tracking; (2) the appended goal-recall answer dilutes the
+  decision-token loss budget; (3) head_tail keeps the head, so the goal is visible near the
+  answer → retrieval, not deep recall. **Honest takeaway: the next-token proxy is the wrong
+  instrument for SPT.** Keep SPT as the method/thesis bet but measure it with a capability eval
+  (goal-stability / Hexagon-Bench), not this proxy. Don't keep stacking it.
+- 0041 (train7200) still running -- the compute frontier remains the one real lever.
+
+### exp 0042 — 2-seed confirm of the train7200 frontier
+Keeps the GPU busy (within the 9000s timeout) while confirming the frontier point. The next
+BIGGER compute step (train9000+ toward 1 epoch ~1141 steps) needs a timeout raise + loop
+restart, done at the next idle.
+
 <!-- next entries appended at each steering check-in -->
