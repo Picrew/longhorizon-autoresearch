@@ -1,0 +1,8 @@
+{
+  "slug": "rslora",
+  "hypothesis": "rank-stabilised LoRA (alpha/sqrt(r) scaling) on the big-data best.",
+  "base": "best",
+  "overrides": {
+    "use_rslora": true
+  }
+}

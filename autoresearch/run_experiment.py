@@ -59,6 +59,9 @@ DECISION_ROLES = {"assistant"}  # tokens the agent itself produces
 
 
 DEFAULTS: dict = {
+    # base model: null => use the --model CLI arg; set to override per-experiment
+    # (e.g. a bigger base model). Eval is the same val set, so losses stay comparable.
+    "model": None,
     # data (relative to --data-root)
     "train_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/train.sft.jsonl",
     "val_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/val.sft.jsonl",
@@ -79,6 +82,8 @@ DEFAULTS: dict = {
     "lora_alpha": 32,
     "lora_dropout": 0.05,
     "target_modules": ["q_proj", "k_proj", "v_proj", "o_proj"],
+    "use_dora": False,         # DoRA (weight-decomposed LoRA) -- often beats LoRA at fixed rank
+    "use_rslora": False,       # rank-stabilised LoRA (alpha/sqrt(r) scaling) -- helps at higher rank
     # --- optimisation ---
     "lr": 1.0e-4,
     "lr_scheduler_type": "constant_with_warmup",
@@ -326,7 +331,7 @@ def main() -> None:
     root = Path(args.data_root)
 
     set_seed(int(cfg["seed"]))
-    model_path = Path(args.model)
+    model_path = Path(cfg.get("model") or args.model)
     train_file = root / cfg["train_file"]
     val_file = root / cfg["val_file"]
     for pth in (model_path, train_file, val_file):
@@ -351,6 +356,7 @@ def main() -> None:
     model = get_peft_model(model, LoraConfig(
         r=int(cfg["lora_r"]), lora_alpha=int(cfg["lora_alpha"]), lora_dropout=float(cfg["lora_dropout"]),
         bias="none", task_type="CAUSAL_LM", target_modules=list(cfg["target_modules"]),
+        use_dora=bool(cfg.get("use_dora", False)), use_rslora=bool(cfg.get("use_rslora", False)),
     ))
 
     # ---- build train dataset: role-aware labels + truncation strategy ----

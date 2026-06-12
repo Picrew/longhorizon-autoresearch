@@ -411,4 +411,19 @@ the headline result -> finalize. (Watch for OOM at r128/ctx5120; discard if so.)
 - 0043 (r128@train5400) running = the capacity verdict. If it ties ~0.640, that's the
   QLoRA/proxy ceiling and we finalize on the data+compute step-change (0.6657->0.6401).
 
+---
+## PHASE 4 — break the ~0.640 ceiling (experiments → 84)
+The 4B+QLoRA proxy ceiled at ~0.640 (compute plateau + r128 *worse* → not capacity-in-rank,
+not compute, not data-quantity). To find a real turning point we attack what *caps* the
+ceiling, on three fronts (same fixed metric, so all comparable to 0.6401):
+- **Better PEFT** (cheap): DoRA (weight-decomposed) and rsLoRA — a *better* adapter, not just
+  more rank (0045 DoRA, 0046 rsLoRA, 0047 DoRA+all-linear).
+- **Bigger/better data** (medium): building a 30k long-heavy slice (`big_long_v2`) for
+  multi-epoch training — does more/diverse data extend the scaling past the 9.1k plateau?
+- **Bigger base model** ⭐ (the likely turning point): downloading **Qwen3-8B** (via hf-mirror,
+  since direct HF is blocked). An 8B base evaluated on the SAME val set is directly comparable
+  to the 4B's 0.640 — more model capacity should lower the ceiling. Added a per-config `model`
+  override so the loop can run 8B specs.
+Discipline unchanged: fixed metric, 2-seed every new best, keep-margin 0.004.
+
 <!-- next entries appended at each steering check-in -->

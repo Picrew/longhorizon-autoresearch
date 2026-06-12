@@ -1,0 +1,8 @@
+{
+  "slug": "dora",
+  "hypothesis": "Phase4 ceiling-break: DoRA (weight-decomposed LoRA) on the big-data best -- often beats plain LoRA at fixed rank; r128 LoRA was worse so test a *better* PEFT not just more rank.",
+  "base": "best",
+  "overrides": {
+    "use_dora": true
+  }
+}
