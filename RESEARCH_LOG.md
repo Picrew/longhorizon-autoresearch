@@ -426,4 +426,10 @@ ceiling, on three fronts (same fixed metric, so all comparable to 0.6401):
   override so the loop can run 8B specs.
 Discipline unchanged: fixed metric, 2-seed every new best, keep-margin 0.004.
 
+### Phase 4 PEFT track = negative; 8B is the bet
+- **0045 DoRA**: 0.64894 (worse than 0.6401; DoRA also ~1.5x slower so fewer steps). A *better
+  adapter* doesn't break the ceiling -> PEFT track dropped (rsLoRA/all-linear not revived).
+- 8B download stalled at 4/5 shards (mirror AccessDenied on shard 1); re-launched with retries.
+- 0046 (30k data big_long_v2, 15686 ex @train7200) running -- does more/diverse data extend scaling?
+
 <!-- next entries appended at each steering check-in -->

@@ -1,0 +1,9 @@
+{
+  "slug": "bigdata-v2-30k",
+  "base": "best",
+  "hypothesis": "Bigger/better data: ~24-30k long-heavy slice (big_long_v2, 65% long) at train7200 -- does more diverse long data extend scaling past the 9.1k plateau (0.6401)?",
+  "overrides": {
+    "train_file": "data/agentic_experiments/big_long_v2/train.noleak.sft.jsonl",
+    "train_seconds": 7200
+  }
+}
