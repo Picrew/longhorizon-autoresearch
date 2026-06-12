@@ -18,6 +18,14 @@ resume by reading files, never from memory.
 ssh -p 6000 ljj@124.220.35.225 'cd /home/ljj/ssd1/ljj/research/llm-longhorizon-traces/autoresearch_repo && tail -n 20 autoresearch/live.log; echo ---; ls experiments; echo ---; pgrep -af "autoresearch/loop.py" || echo "LOOP NOT RUNNING"; nvidia-smi --query-gpu=utilization.gpu,memory.used --format=csv,noheader'
 ```
 
+## ⚠ local ephemeral-port exhaustion ("Can't assign requested address")
+Too many rapid ssh/rsync retries exhaust LOCAL ephemeral ports (TIME_WAIT) → connect
+fails with "Can't assign requested address" (a LOCAL error; the box is fine, the loop
+keeps running). Fix: (1) back off ~5-10 min to let TIME_WAIT drain; (2) MULTIPLEX ssh so
+one TCP connection is reused — prefix every ssh/rsync with:
+`-o ControlMaster=auto -o ControlPath=/tmp/sshljj-%p -o ControlPersist=600`
+and do ONE ssh per check (batch all reads into a single command), not retry-loops of many.
+
 ## ⚠ rsync pulls are flaky while the box is training
 Under GPU+CPU load, `rsync` pulls intermittently fail with "receiver has empty
 file list: exiting" (the push direction is usually fine). ssh commands stay
