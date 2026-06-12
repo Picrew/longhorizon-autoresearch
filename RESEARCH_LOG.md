@@ -432,4 +432,15 @@ Discipline unchanged: fixed metric, 2-seed every new best, keep-margin 0.004.
 - 8B download stalled at 4/5 shards (mirror AccessDenied on shard 1); re-launched with retries.
 - 0046 (30k data big_long_v2, 15686 ex @train7200) running -- does more/diverse data extend scaling?
 
+### ⭐⭐ TURNING POINT -- Qwen3-8B breaks the ceiling (0048)
+- **0048** (best recipe on **Qwen3-8B**, same val): **0.60098, KEPT (−0.039 vs 4B's 0.6401,
+  ~10x noise)** -- and with only **263 steps** (UNDERtrained vs 4B's 388, since 8B is slower),
+  yet it crushed the 4B. Per bucket: **long 0.6495→0.605 (−0.045, the biggest drop)**,
+  med 0.6136→0.582, short 0.7258→0.694.
+- **The ceiling was MODEL CAPACITY.** This explains why r128/DoRA were *worse* on the 4B: a
+  saturated 4B can't use more *adapter* capacity; it needed more *model* capacity. The long
+  bucket gained most -- exactly the long-horizon target. 8B is the new best track.
+- 8B undertrained at 263 steps => more compute should go lower. 0049 2-seed-confirming;
+  queued 0051 (8B@train7200), 0050 (8B+30k data@train7200).
+
 <!-- next entries appended at each steering check-in -->

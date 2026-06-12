@@ -1,0 +1,9 @@
+{
+  "slug": "bigdata-v2-30k",
+  "hypothesis": "Re-queued (killed earlier for 8B priority): 30k long-heavy data @train7200 -- does more data extend scaling past 0.6401?",
+  "base": "best",
+  "overrides": {
+    "train_file": "data/agentic_experiments/big_long_v2/train.noleak.sft.jsonl",
+    "train_seconds": 7200
+  }
+}

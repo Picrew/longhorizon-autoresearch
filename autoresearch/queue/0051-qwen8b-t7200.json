@@ -1,0 +1,8 @@
+{
+  "slug": "qwen8b-t7200",
+  "base": "best",
+  "hypothesis": "8B broke the ceiling at only 263 steps (undertrained). Give it more compute: train7200 on 8B -- expect it to go well below 0.601.",
+  "overrides": {
+    "train_seconds": 7200
+  }
+}
