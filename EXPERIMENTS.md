@@ -58,5 +58,7 @@ decision-loss curve).
 | 0043 | r128-t5400 | Capacity break-attempt: r64->r128 (alpha256) at the best compute (train5400/388 steps).... | 0.65508 | decision_loss_v2 |  | 385 | 5402.2 |
 | 0044 | r128-t7200 | Capacity + compute: r128 @ train7200 (516 steps). If r64 plateaued at 388 due to capaci... | 0.65449 | decision_loss_v2 |  | 512 | 7206.4 |
 | 0045 | dora | Phase4 ceiling-break: DoRA (weight-decomposed LoRA) on the big-data best -- often beats... | 0.64894 | decision_loss_v2 |  | 306 | 5414.0 |
+| 0046 | bigdata-v2-30k | Bigger/better data: ~24-30k long-heavy slice (big_long_v2, 65% long) at train7200 -- do... | failed | full_seq |  |  |  |
+| 0048 | qwen8b-best | ⭐ CEILING-BREAK: run the best 4B recipe on Qwen3-8B (same val => directly comparable to... | 0.60098 | decision_loss_v2 | ✅ | 263 | 5421.4 |
 
-_45 experiments logged; 16 on the v1 (head@8192) curve, 26 on the v2 (long-horizon, to 16384) curve, 16 kept improvements total._
+_47 experiments logged; 16 on the v1 (head@8192) curve, 27 on the v2 (long-horizon, to 16384) curve, 17 kept improvements total._
