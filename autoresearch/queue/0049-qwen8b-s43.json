@@ -3,7 +3,7 @@
   "hypothesis": "2-seed confirm of the 8B ceiling-break (seed 43).",
   "base": "best",
   "overrides": {
-    "model": "/home/ljj/ssd1/ljj/research/llm-longhorizon-traces/models/Qwen3-8B",
+    "model": "models/Qwen3-8B",
     "seed": 43
   }
 }

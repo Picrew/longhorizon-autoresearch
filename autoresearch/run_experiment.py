@@ -331,7 +331,14 @@ def main() -> None:
     root = Path(args.data_root)
 
     set_seed(int(cfg["seed"]))
-    model_path = Path(cfg.get("model") or args.model)
+    # `model` may be a path relative to --data-root (keeps configs free of any
+    # machine-specific absolute paths) or absolute; falls back to --model.
+    _m = cfg.get("model")
+    if _m:
+        _mp = Path(_m)
+        model_path = _mp if _mp.is_absolute() else (root / _m)
+    else:
+        model_path = Path(args.model)
     train_file = root / cfg["train_file"]
     val_file = root / cfg["val_file"]
     for pth in (model_path, train_file, val_file):

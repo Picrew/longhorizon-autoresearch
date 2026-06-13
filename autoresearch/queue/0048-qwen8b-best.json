@@ -3,6 +3,6 @@
   "hypothesis": "⭐ CEILING-BREAK: run the best 4B recipe on Qwen3-8B (same val => directly comparable to 0.6401). More model capacity should break the ceiling. ~360 steps @train5400, fair vs 4B's 388.",
   "base": "best",
   "overrides": {
-    "model": "/home/ljj/ssd1/ljj/research/llm-longhorizon-traces/models/Qwen3-8B"
+    "model": "models/Qwen3-8B"
   }
 }

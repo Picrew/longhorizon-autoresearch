@@ -10,3 +10,5 @@ experiments/*/stdout.log
 experiments/*/stderr.log
 *.tmp
 loop_state.json
+connection.local.sh
+autoresearch/live.log

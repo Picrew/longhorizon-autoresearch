@@ -1,6 +1,6 @@
 {
   "exp_id": "0001",
-  "config_path": "/home/ljj/ssd1/ljj/research/llm-longhorizon-traces/autoresearch_repo/experiments/0001/config.json",
+  "config_path": "<SERVER_ROOT>/autoresearch_repo/experiments/0001/config.json",
   "config": {
     "train_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/train.sft.jsonl",
     "val_file": "data/agentic_experiments/pilot_4090_longhorizon_v1/val.sft.jsonl",
