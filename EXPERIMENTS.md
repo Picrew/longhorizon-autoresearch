@@ -63,5 +63,7 @@ decision-loss curve).
 | 0049 | qwen8b-s43 | 2-seed confirm of the 8B ceiling-break (seed 43). | 0.60853 | decision_loss_v2 |  | 264 | 5415.5 |
 | 0050 | bigdata-v2-30k | Re-queued (killed earlier for 8B priority): 30k long-heavy data @train7200 -- does more... | 0.60540 | decision_loss_v2 |  | 348 | 7213.9 |
 | 0051 | qwen8b-t7200 | 8B broke the ceiling at only 263 steps (undertrained). Give it more compute: train7200 ... | 0.60316 | decision_loss_v2 |  | 350 | 7207.9 |
+| 0052 | qwen8b-r128 | Does the BIGGER model use more adapter rank? r64->r128 on 8B (the saturated 4B got wors... | 0.61015 | decision_loss_v2 |  | 261 | 5404.8 |
+| 0053 | qwen8b-r128-t7200 | 8B r128 + more compute (train7200): capacity+compute on the bigger model. | failed | full_seq |  |  |  |
 
-_50 experiments logged; 16 on the v1 (head@8192) curve, 30 on the v2 (long-horizon, to 16384) curve, 17 kept improvements total._
+_52 experiments logged; 16 on the v1 (head@8192) curve, 31 on the v2 (long-horizon, to 16384) curve, 17 kept improvements total._

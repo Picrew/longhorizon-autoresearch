@@ -1,0 +1,9 @@
+{
+  "slug": "qwen14b-ctx3072",
+  "base": "best",
+  "hypothesis": "Next capacity step: Qwen3-14B. Fits 24GB only at ctx3072 (vs 8B's 5120) + ~180 steps (slower). Tests capacity vs context+compute on a fixed GPU. Same val => comparable to 8B 0.601; <0.601 by >0.008 = another turning point.",
+  "overrides": {
+    "model": "/home/ljj/ssd1/ljj/research/llm-longhorizon-traces/models/Qwen3-14B",
+    "max_length": 3072
+  }
+}
