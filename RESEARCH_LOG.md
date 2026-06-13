@@ -443,4 +443,14 @@ Discipline unchanged: fixed metric, 2-seed every new best, keep-margin 0.004.
 - 8B undertrained at 263 steps => more compute should go lower. 0049 2-seed-confirming;
   queued 0051 (8B@train7200), 0050 (8B+30k data@train7200).
 
+### 8B turning point CONFIRMED + 8B also plateaus (~0.60)
+- **0049** (8B seed43): 0.60853 -- 2-seed of 0048 (0.601). 8B = {0.601, 0.609}, both far below the
+  4B's 0.640. **Turning point confirmed** (model capacity was the ceiling). Seed spread ~0.008 (8B
+  a bit noisier than 4B's ~0.004).
+- **0050** (8B + 30k data @train7200): 0.6054 -- tie (more data doesn't help 8B either).
+- **0051** (8B @train7200, 350 steps): 0.60316 -- tie with 0.601 (8B compute ALSO plateaus ~0.60).
+- So 8B gave a one-time ~0.04 capacity jump then plateaus like the 4B did. Next: does 8B use
+  higher RANK (r128, 0052/0053 -- the 4B couldn't)? And try 14B (downloading) for the next
+  capacity step (may only fit at reduced ctx on 24GB).
+
 <!-- next entries appended at each steering check-in -->

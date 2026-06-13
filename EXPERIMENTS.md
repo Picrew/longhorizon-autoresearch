@@ -60,5 +60,8 @@ decision-loss curve).
 | 0045 | dora | Phase4 ceiling-break: DoRA (weight-decomposed LoRA) on the big-data best -- often beats... | 0.64894 | decision_loss_v2 |  | 306 | 5414.0 |
 | 0046 | bigdata-v2-30k | Bigger/better data: ~24-30k long-heavy slice (big_long_v2, 65% long) at train7200 -- do... | failed | full_seq |  |  |  |
 | 0048 | qwen8b-best | ⭐ CEILING-BREAK: run the best 4B recipe on Qwen3-8B (same val => directly comparable to... | 0.60098 | decision_loss_v2 | ✅ | 263 | 5421.4 |
+| 0049 | qwen8b-s43 | 2-seed confirm of the 8B ceiling-break (seed 43). | 0.60853 | decision_loss_v2 |  | 264 | 5415.5 |
+| 0050 | bigdata-v2-30k | Re-queued (killed earlier for 8B priority): 30k long-heavy data @train7200 -- does more... | 0.60540 | decision_loss_v2 |  | 348 | 7213.9 |
+| 0051 | qwen8b-t7200 | 8B broke the ceiling at only 263 steps (undertrained). Give it more compute: train7200 ... | 0.60316 | decision_loss_v2 |  | 350 | 7207.9 |
 
-_47 experiments logged; 16 on the v1 (head@8192) curve, 27 on the v2 (long-horizon, to 16384) curve, 17 kept improvements total._
+_50 experiments logged; 16 on the v1 (head@8192) curve, 30 on the v2 (long-horizon, to 16384) curve, 17 kept improvements total._

@@ -1,0 +1,9 @@
+{
+  "slug": "qwen8b-r128",
+  "base": "best",
+  "hypothesis": "Does the BIGGER model use more adapter rank? r64->r128 on 8B (the saturated 4B got worse with r128; 8B may use it).",
+  "overrides": {
+    "lora_r": 128,
+    "lora_alpha": 256
+  }
+}

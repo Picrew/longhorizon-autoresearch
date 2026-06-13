@@ -1,0 +1,10 @@
+{
+  "slug": "qwen8b-r128-t7200",
+  "base": "best",
+  "hypothesis": "8B r128 + more compute (train7200): capacity+compute on the bigger model.",
+  "overrides": {
+    "lora_r": 128,
+    "lora_alpha": 256,
+    "train_seconds": 7200
+  }
+}
